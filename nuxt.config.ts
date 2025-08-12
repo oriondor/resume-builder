@@ -1,15 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  components: [
+    { path: "~/components/HelperComponents", pathPrefix: true, prefix: "helper" },
+    { path: "~/components/HelperComponents/View", pathPrefix: true, prefix: "view" },
+    { path: "~/components/PlatformComponents", pathPrefix: false },
+  ],
+  css: ["@/assets/css/colors.css"],
 
   modules: [
-    '@nuxt/content',
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/icon',
-    '@nuxt/image',
-    '@nuxt/scripts',
-    '@nuxt/test-utils'
-  ]
-})
+    "@nuxt/content",
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/icon",
+    "@nuxt/image",
+    "@nuxt/scripts",
+    "@nuxt/test-utils",
+  ],
+});
