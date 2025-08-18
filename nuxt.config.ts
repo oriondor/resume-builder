@@ -3,11 +3,20 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   components: [
-    { path: "~/components/HelperComponents", pathPrefix: true, prefix: "helper" },
+    {
+      path: "~/components/HelperComponents",
+      pathPrefix: true,
+      prefix: "helper",
+      ignore: ["/View"],
+    },
     { path: "~/components/HelperComponents/View", pathPrefix: true, prefix: "view" },
     { path: "~/components/PlatformComponents", pathPrefix: false },
   ],
-  css: ["@/assets/css/colors.css"],
+  css: [
+    "@/assets/css/colors.css",
+    "@/assets/css/general.css",
+    "@/assets/css/cool-gradient-hover.scss",
+  ],
 
   modules: [
     "@nuxt/content",
