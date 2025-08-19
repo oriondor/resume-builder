@@ -107,6 +107,20 @@
     lastObjectUrl = url;
     previewImgUrl.value = url;
   }
+  function removeFile() {
+    file.value = null;
+    previewImgUrl.value = null;
+
+    // clear PDF canvas if rendered
+    const canvas = pdfCanvas.value;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = canvas.height = 0;
+    }
+
+    cleanupObjectUrl();
+  }
 
   // watch file to build preview
   watch(
@@ -143,6 +157,12 @@
 <template>
   <div class="file-upload">
     <div v-if="file" class="preview-container">
+      <helper-button
+        type="secondary"
+        class="remove-file"
+        icon="material-symbols:close-rounded"
+        @click="removeFile"
+      />
       <div class="preview-header">
         <span class="preview-label">Preview:</span>
         <span class="preview-name">{{ file.name }}</span>
@@ -228,5 +248,12 @@
   .preview-note {
     opacity: 0.7;
     font-size: 13px;
+  }
+
+  .remove-file {
+    float: right;
+    margin: 0;
+    margin-bottom: 8px;
+    cursor: pointer;
   }
 </style>
