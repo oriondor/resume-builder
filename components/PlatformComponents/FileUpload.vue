@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  const file = defineModel<File | null>("file");
   const dropZone = ref<HTMLDivElement>();
   const previewImgUrl = ref<string | null>(null);
   const pdfCanvas = ref<HTMLCanvasElement | null>(null);
@@ -22,8 +23,6 @@
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
-
-  const file = ref<File | null>(null);
 
   function onDrop(files: File[] | null) {
     if (files && files.length > 0) {
