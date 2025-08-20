@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { useOpenAi } from "~/composables/useOpenAi";
-
   const { uploadResume } = useOpenAi();
   const file = ref<File | null>(null);
 
@@ -15,7 +13,7 @@
     <file-upload v-model:file="file" />
     <helper-button v-if="file" @click="processFile">Process selected file</helper-button>
     or
-    <helper-button>Create from scratch</helper-button>
+    <helper-button @click="navigateTo('/resume')">Create from scratch</helper-button>
     <helper-button type="subdued" @click="navigateTo('/demo')">Go to demo</helper-button>
   </div>
 </template>

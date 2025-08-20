@@ -5,7 +5,7 @@
 <template>
   <helper-control-element class="checkbox">
     <label class="checkbox-label">
-      <input v-model="modelValue" type="checkbox" class="checkbox-input" >
+      <input v-model="modelValue" type="checkbox" class="checkbox-input" tabindex="-1" />
       <span class="checkbox-box" />
       <slot />
     </label>
@@ -28,7 +28,6 @@
     opacity: 0;
     pointer-events: none;
   }
-
 
   .checkbox-box {
     width: 1rem;

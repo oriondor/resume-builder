@@ -1,5 +1,39 @@
 import OpenAI, { toFile } from "openai";
 
+const resumeTemplate = `
+  {
+    "fullName": "",
+    "title": "",
+    "shortSentence"(optional): "",
+    "summary": "",
+    "contact": {
+      "email": "",
+      "phones": [],
+      "address": ""
+    },
+    "experience": [
+      {
+        "company": "",
+        "role": "",
+        "location": "",
+        "companyDescription": "",
+        "startDate": "",
+        "endDate": "",
+        "description": ""
+      }
+    ],
+    "education": [
+      {
+        "institution": "",
+        "degree": "",
+        "month": "",
+        "year": ""
+      }
+    ],
+    "skills": []
+  }
+`;
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   if (!config.openaiApiKey) {
@@ -24,18 +58,7 @@ export default defineEventHandler(async (event) => {
   // 2) Ask the model, referencing the file as an input_file
   const prompt = `Determine if this is a resume. If not, reply exactly: {"error": "This file is not a resume"}.
         If it is, return strictly valid JSON:
-        {
-        "name": "",
-        "contact": { "email": "", "phones": [], "address": "" },
-        "summary": "",
-        "experience": [
-            { "company": "", "position": "", "startDate": "", "endDate": "", "description": "" }
-        ],
-        "education": [
-            { "institution": "", "degree": "", "startDate": "", "endDate": "" }
-        ],
-        "skills": []
-        }
+        ${resumeTemplate}
     `;
 
   const resp = await client.responses.create({
