@@ -16,7 +16,7 @@
 /* 2) Themes (swap globally by name) */
 /* NAVY */
 :root[data-theme="navy"] {
-  --color-accent: hsl(221 61% 27%);
+  --color-accent: hsl(219 20% 25%);
   --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(221 100% 97%);
   --color-accent-border: hsl(221 61% 84%);
@@ -72,6 +72,9 @@
 .bg-accent {
   background: var(--color-accent);
   color: var(--color-accent-ink);
+}
+.bg-accent .text {
+  color: var(--color-accent-ink) !important;
 }
 .bg-accent-soft {
   background: var(--color-accent-soft);

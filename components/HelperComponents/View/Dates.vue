@@ -3,14 +3,33 @@
     start: string;
     end?: string | null; // undefined - mean single date, null - means "Present"
   }
+
+  type ResumeDateRange = [string, string | null];
+
   interface Props {
-    dates: ResumeDate;
+    dates: ResumeDate | ResumeDateRange;
     month?: boolean; // Optional prop to indicate if the date should be displayed as month/year
+    size?: "small" | "medium" | "large";
+    type?: "text" | "title" | "subtitle" | "italics";
   }
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    size: "small",
+    type: "italics",
+  });
 
   const { dates } = toRefs(props);
+
+  // Ensure dates is always in correct {start: .., end: ..} format
+  const correctedDates = computed(() => {
+    if (Array.isArray(dates.value)) {
+      return {
+        start: dates.value[0],
+        end: dates.value[1],
+      };
+    }
+    return dates.value;
+  });
 
   function formatMonthYear(value: string) {
     if (!value) return "";
@@ -25,20 +44,28 @@
     );
   }
 
-  const startDate = computed(() => formatMonthYear(dates.value.start));
+  const startDate = computed(() => formatMonthYear(correctedDates.value.start));
 
   const endDate = computed(() => {
-    if (dates.value.end === undefined) return null;
-    return dates.value.end !== null ? formatMonthYear(dates.value.end) : "Present";
+    if (correctedDates.value.end === undefined) return null;
+    return correctedDates.value.end !== null
+      ? formatMonthYear(correctedDates.value.end)
+      : "Present";
   });
 </script>
 
 <template>
-  <span>{{ startDate }} {{ endDate ? `- ${endDate}` : "" }}</span>
+  <div class="view-date">
+    <view-text :model-value="startDate" :type :size />
+    <template v-if="endDate">
+      <span> - </span>
+      <view-text :model-value="endDate" :type :size />
+    </template>
+  </div>
 </template>
 
 <style scoped>
-  span {
-    font-style: italic;
+  .view-date * {
+    display: inline;
   }
 </style>
