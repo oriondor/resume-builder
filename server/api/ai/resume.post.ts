@@ -19,18 +19,44 @@ const resumeTemplate = `
         "companyDescription": "",
         "startDate": "",
         "endDate": "",
-        "description": ""
+        "description": "",
+        "index": 0
       }
     ],
     "education": [
       {
         "institution": "",
         "degree": "",
-        "month": "",
-        "year": ""
+        "dateFinished": "",
+        "description": "",
+        "index": 0
       }
     ],
-    "skills": []
+    "skills": [],
+    "interests": [],
+    "personalProjects": [
+      {
+        "title": "",
+        "startDate": "",
+        "endDate": "",
+        "index": 0
+      }
+    ],
+    "languages": [
+      {
+        "name": "",
+        "level": "",
+        "index": 0
+      }
+    ],
+    "certifications": [
+      {
+        "title": "",
+        "startDate": "",
+        "endDate": "",
+        "index": 0
+      }
+    ]
   }
 `;
 
@@ -57,8 +83,10 @@ export default defineEventHandler(async (event) => {
 
   // 2) Ask the model, referencing the file as an input_file
   const prompt = `Determine if this is a resume. If not, reply exactly: {"error": "This file is not a resume"}.
-        If it is, return strictly valid JSON:
+        If it is, return valid JSON like this:
         ${resumeTemplate}
+        If you think some categories are missing, or you see additional relevant information, add it in a logical way.
+        Please, for dates, use ISO date format; also if you see 'present' - put null into a date value
     `;
 
   const resp = await client.responses.create({

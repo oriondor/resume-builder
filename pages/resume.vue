@@ -20,33 +20,36 @@
   }
 </style>
 <style>
-  /* Printable rules */
+
   @media print {
     @page {
       size: A4;
-      /* margin: 12mm; */
-    } /* You control print margins here */
-    html,
-    body {
       margin: 0;
     }
+
     body {
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
+
+    .container {
+      overflow: hidden !important;
+      height: auto;
+    }
+
     .page {
-      box-shadow: none;
-      margin: 0;
-      padding: 0;
-    }
-    .page > .content {
-      padding: 0;
-      margin: 0;
-    }
-    .page-break {
+      box-shadow: none !important;
+      margin: 0 !important;
+      width: auto;
+      min-height: auto;
       break-after: page;
       page-break-after: always;
     }
+
+    .page-source {
+      display: none !important;
+    }
+
     .no-print {
       display: none;
     }
