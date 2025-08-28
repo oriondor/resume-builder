@@ -7,13 +7,6 @@
   const templates = ref<Templates[]>([]);
 
   const { resume } = useResume();
-
-  const phones = computed({
-    get: () => resume.value.contact.phones.join(", "),
-    set(value: string) {
-      resume.value.contact.phones = value.split(",").map((phone) => phone.trim());
-    },
-  });
 </script>
 
 <template>
@@ -26,18 +19,31 @@
           <view-text v-if="resume.shortSentence" v-model="resume.shortSentence" type="text" />
         </div>
         <div class="section contact bg-accent">
-          <view-text v-model="resume.contact.email" type="text" icon="ic:baseline-email" />
-          <view-text v-model="phones" type="text" icon="material-symbols:call-outline-sharp" />
+            <a v-if="resume?.contact?.email" :href="`mailto:${resume.contact.email}`">
+              <view-text v-model="resume.contact.email" type="text" icon="ic:baseline-email" />
+            </a>
+          <a v-for="(phone, index) in resume.contact.phones" :key="phone" :href="`tel:${phone}`">
+            <view-text
+              v-model="resume.contact.phones[index]"
+              type="text"
+              icon="material-symbols:call-outline-sharp"
+            />
+          </a>
           <view-text
             v-model="resume.contact.address"
             type="text"
             icon="material-symbols:pin-drop"
           />
         </div>
+        <div class="summary">
+          <view-text v-model="resume.summary" type="italics" size="small" />
+        </div>
         <div class="resume-container">
           <div class="left-side">
             <div v-if="resume.experience.length" class="section experience">
-              <view-text type="title" size="large" uppercase>Work Experience</view-text>
+              <view-text type="title" size="large" uppercase class="title-section">
+                Work Experience
+              </view-text>
               <div
                 v-for="(item, index) in resume.experience"
                 :key="index"
@@ -61,16 +67,61 @@
               </div>
             </div>
             <div v-if="resume.education.length" class="section education">
-              <view-text type="title" size="large" uppercase>Education</view-text>
+              <view-text type="title" size="large" uppercase class="title-section">
+                Education
+              </view-text>
               <div
                 v-for="(item, index) in resume.education"
                 :key="index"
                 class="item education-item"
               >
-                <view-text v-model="item.degree" type="subtitle" />
-                <view-text v-model="item.institution" type="text" />
-                <view-text v-model="item.year" type="text" />
+                <view-text v-model="item.degree" type="title" />
+                <view-text v-model="item.institution" type="subtitle" size="large" />
+                <div class="date-location">
+                  <view-dates :dates="[item.dateFinished, '']" month />
+                  <view-text v-model="item.location" type="italics" size="small" />
+                </div>
+                <view-text v-model="item.description" type="text" />
               </div>
+            </div>
+          </div>
+          <div class="right-side">
+            <view-text type="title" size="large" uppercase class="title-section">
+              Skills
+            </view-text>
+            <div class="skills-list">
+              <helper-tag
+                v-for="skill in resume.skills"
+                :key="skill"
+                :text="skill"
+                variant="accent"
+              />
+            </div>
+            <view-text type="title" size="large" uppercase class="title-section">
+              Personal projects
+            </view-text>
+            <template v-for="project in resume.personalProjects" :key="project.index">
+              <view-text type="subtitle" size="large">
+                {{ project.title }}
+              </view-text>
+              <view-dates :dates="[project.startDate, project.endDate]" month />
+            </template>
+            <view-text type="title" size="large" uppercase class="title-section">
+              Languages
+            </view-text>
+            <template v-for="language in resume.languages" :key="language.index">
+              <view-text type="subtitle">
+                {{ language.name }}
+              </view-text>
+              <view-text type="italics" size="small">
+                {{ language.level }}
+              </view-text>
+            </template>
+            <view-text type="title" size="large" uppercase class="title-section">
+              Interests
+            </view-text>
+            <div class="skills-list">
+              <helper-tag v-for="interest in resume.interests" :key="interest" :text="interest" />
             </div>
           </div>
         </div>
@@ -80,14 +131,20 @@
 </template>
 
 <style scoped lang="scss">
+  a {
+    text-decoration: none;
+  }
   .container {
     overflow: auto;
     height: 100vh;
     max-height: 100vh;
+    flex: 1;
+    display: flex;
+    justify-content: center;
   }
   .page {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     margin: 0;
     padding: 0;
     background: #fff;
@@ -109,6 +166,7 @@
   }
   .main-info {
     padding: 9mm;
+    padding-block-end: 5mm;
   }
   .contact {
     display: flex;
@@ -116,8 +174,31 @@
     gap: 1rem;
     padding: 1rem;
   }
+  .summary {
+    padding: 4mm;
+    padding-block-end: 0;
+  }
   .resume-container {
     padding: 1rem;
+    padding-block: 0;
+    display: flex;
+
+    [class$="-side"] {
+      flex: 1;
+    }
+
+    .left-side {
+      padding-inline-end: 3rem;
+    }
+
+    .right-side {
+      padding-inline-start: 3rem;
+    }
+  }
+
+  .title-section {
+    margin-block-start: 0.75rem;
+    margin-block-end: 0.5rem;
   }
 
   .item::before {
@@ -135,5 +216,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 </style>

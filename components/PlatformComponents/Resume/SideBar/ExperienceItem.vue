@@ -11,12 +11,25 @@
     modelValue.value.startDate = dates.value[0];
     modelValue.value.endDate = dates.value[1];
   });
+
+  const emit = defineEmits<{
+    (e: "remove", index: number): void;
+  }>();
 </script>
 
 <template>
   <div class="experience-item">
-    <div class="collapse-icon" @click="collapsed = !collapsed">
-      <Icon :name="collapsed ? 'ic:baseline-expand-more' : 'ic:baseline-expand-less'" />
+    <div class="top-bar">
+      <Icon
+        :name="collapsed ? 'ic:baseline-expand-more' : 'ic:baseline-expand-less'"
+        class="collapse-icon"
+        @click="collapsed = !collapsed"
+      />
+      <Icon
+        name="material-symbols:delete-rounded"
+        class="collapse-icon"
+        @click="emit('remove', modelValue.index)"
+      />
     </div>
     <div class="info">
       <transition mode="out-in" name="fade-slide">
@@ -42,11 +55,14 @@
 
 <style lang="scss" scoped>
   .experience-item {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    gap: 1rem;
     width: 100%;
+
+    .top-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      font-size: large;
+    }
   }
 
   .info {
