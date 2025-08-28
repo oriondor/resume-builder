@@ -10,3 +10,30 @@
     Noto Sans,
     sans-serif;
 }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  /* overflow: hidden; */
+}
+/* Nuxt root often is #__nuxt */
+#__nuxt,
+#__layout,
+#app {
+  height: 100%;
+}
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* #vue-tracer-overlay {
+  display: none !important;
+} */

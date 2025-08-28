@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   runtimeConfig: {
     openaiApiKey: process.env.NUXT_OPENAI_API_KEY,
   },
@@ -30,5 +30,6 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
     "@vueuse/nuxt",
+    "@pinia/nuxt",
   ],
 });

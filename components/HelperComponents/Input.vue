@@ -9,7 +9,8 @@
 
 <template>
   <helper-control-element>
-    <input v-bind="attrs" v-model="text" type="text" class="text-input" />
+    <label v-if="attrs.label" class="control-label">{{ attrs.label }}</label>
+    <input v-bind="attrs" v-model="text" type="text" class="text-input">
   </helper-control-element>
 </template>
 
