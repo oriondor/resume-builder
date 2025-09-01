@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  const attrs = useAttrs();
   defineEmits<{
     (e: "input", value: string): void;
   }>();
@@ -8,9 +7,8 @@
 </script>
 
 <template>
-  <helper-control-element>
-    <label v-if="attrs.label" class="control-label">{{ attrs.label }}</label>
-    <input v-bind="attrs" v-model="text" type="text" class="text-input">
+  <helper-control-element v-bind="$attrs">
+    <input v-bind="$attrs" v-model="text" type="text" class="text-input" />
   </helper-control-element>
 </template>
 
