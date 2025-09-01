@@ -1,20 +1,47 @@
 <script setup lang="ts">
-  import type { SelectProps } from "../HelperComponents/Selector.vue";
+  import type { SelectableOption, SelectProps } from "../HelperComponents/Selector.vue";
 
-  defineProps<SelectProps>();
-  const modelValue = defineModel<string[]>({ required: true });
+  const props = defineProps<SelectProps>();
+  const modelValue = defineModel<SelectableOption[]>({ required: true });
+
+  // Can be a model if needed
+  const search = defineModel<string>("search", { required: false, default: "" });
+  const emit = defineEmits<{
+    /**
+     * Allow Enter keydown to create new tag using 'search' value
+     */
+    (event: "tag", search: string): void;
+  }>();
+
+  const currentInstance = getCurrentInstance();
+  const allowTagging = computed(() => !!currentInstance?.vnode.props?.onTag);
+
+  function onEnterPress() {
+    if (!allowTagging.value) return;
+    emit("tag", search.value);
+    search.value = "";
+  }
 </script>
 
 <template>
-  <helper-selector v-model="modelValue" :options multiple>
-    <template #trigger-label>
-      <div v-if="!modelValue.length">Select options</div>
-      <helper-tag v-for="option in modelValue" v-else :key="option" :text="option" />
+  <helper-selector v-model="modelValue" v-bind="props" :options multiple>
+    <template #trigger-label="{ getOptionLabel, getOptionKey }">
+      <helper-tag
+        v-for="option in modelValue"
+        :key="getOptionKey(option)"
+        :text="getOptionLabel(option)"
+      />
+      <helper-input
+        v-model="search"
+        :placeholder="!modelValue.length ? 'Select options' : ''"
+        appearance="minimal"
+        @keydown.enter.stop="onEnterPress"
+      />
     </template>
-    <template #option="{ option, selected }">
+    <template #option="{ option, selected, getOptionLabel }">
       <div class="option-content">
         <helper-check-box :model-value="selected" @click.prevent />
-        <helper-tag :text="option" />
+        <helper-tag :text="getOptionLabel(option)" />
       </div>
     </template>
   </helper-selector>
@@ -26,12 +53,17 @@
     align-items: center;
     gap: 0.25rem;
   }
+  :deep(.selector-trigger) {
+    padding: 0;
+  }
   .checkbox {
     margin: 0;
   }
   :deep(.trigger-content) {
     display: flex;
+    align-items: center;
     gap: 0.25rem;
     flex-wrap: wrap;
+    padding: 0.25rem;
   }
 </style>
