@@ -16,6 +16,7 @@
 
 <style scoped>
   .tag {
+    max-height: 1rem;
     display: inline-block;
     padding: 0.25rem 0.6rem;
     border-radius: 1rem;

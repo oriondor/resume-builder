@@ -48,7 +48,11 @@ export interface CertificationItem {
 
 export interface LanguageItem {
   name: string;
-  level: "Conversational" | "Working proficiency" | "Full Professional Proficiency" | "Native or Bilingual Proficiency";
+  level:
+    | "Conversational"
+    | "Working proficiency"
+    | "Full Professional Proficiency"
+    | "Native or Bilingual Proficiency";
   index: number;
 }
 
@@ -56,6 +60,12 @@ export interface ContactItem {
   email: string;
   phones: string[];
   address: string;
+}
+
+export interface SkillItem {
+  id?: string;
+  name: string;
+  created_at: string;
 }
 
 export function useResume() {

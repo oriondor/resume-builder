@@ -1,0 +1,110 @@
+{
+  "fullName": "Vladislav Pikalov",
+  "title": "Full-Stack Web Developer",
+  "shortSentence": "Turning complex business flows into clean, fast web apps",
+  "summary": "Full-stack developer (frontend-leaning) passionate about delivering intuitive, component-driven web applications. I work deep at the component and architecture level, take end-to-end ownership, and take pride in the quality of what I ship. Currently building a tender/procurement platform at Altura B.V. with Nuxt 4, Vue 3, and TypeScript; previous work spans ERP/CRM and B2B SaaS with Django, Laravel, Docker, and data-driven features. Comfortable with WebSockets, Elasticsearch, and PostgreSQL, and experienced in turning complex business flows into clear, fast user experiences.",
+  "contact": {
+    "email": "vladislav.pikalov@gmail.com",
+    "phones": ["+31613461443", "+380503472320"],
+    "address": "Roosendaal, Netherlands"
+  },
+  "experience": [
+    {
+      "company": "Altura B.V.",
+      "role": "Frontend Developer",
+      "location": "Amsterdam",
+      "startDate": "2024-01",
+      "endDate": null,
+      "description": "Building and maintaining a tender-management web app — Nuxt 3, Vue 3, TypeScript",
+      "index": 4,
+      "companyDescription": "B2B SaaS Procurement Startup"
+    },
+    {
+      "company": "Technical Diving Courses ApS",
+      "role": "FrontEnd web developer (part-time)",
+      "location": "Copenhagen, Denmark",
+      "companyDescription": "B2B SaaS solutions, B2C solutions, ERP/CRM systems",
+      "startDate": "2023-09-01",
+      "endDate": null,
+      "description": "Creating and maintaining CRM/ERP system for travel company; Building expertise in Laravel",
+      "index": 0
+    },
+    {
+      "company": "SEDNA Software",
+      "role": "Full-stack web developer",
+      "location": "Roosendaal, Netherlands",
+      "companyDescription": "B2B SaaS solutions, B2C solutions, ERP/CRM systems",
+      "startDate": "2021-02-01",
+      "endDate": "2023-12",
+      "description": "ERP and CRM systems development (oil management/non-destructive testing). Research and implemetation of reinforcement prediction technics on time- series data",
+      "index": 1
+    },
+    {
+      "company": "Artificial Intelligence Institute",
+      "role": "Junior Researcher Computer Vision",
+      "location": "Kyiv, Ukraine",
+      "companyDescription": "",
+      "startDate": "2019-04-01",
+      "endDate": "2021-02-01",
+      "description": "Participation in institute promotion events; Participating in UAV navigation system development; OpenCV on both Python and C++ languages",
+      "index": 2
+    }
+  ],
+  "education": [
+    {
+      "institution": "WSB Academy",
+      "degree": "Master of Science",
+      "dateFinished": "2023-09-01",
+      "description": "Computer Science/Data Science; Machine learning methods for anomaly detection on cryptocurrency data; Image and voice recognition",
+      "index": 0,
+      "location": "Poland"
+    }
+  ],
+  "skills": [
+    "Django",
+    "Docker",
+    "websocket",
+    "Elasticsearch",
+    "Celery",
+    "Unix",
+    "Git",
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "Vue.js",
+    "Node.js",
+    "MongoDB",
+    "PostgreSQL",
+    "MySQL",
+    "REST API"
+  ],
+  "interests": ["Traveling", "Cooking", "Scuba diving", "Skiing", "Crypto"],
+  "personalProjects": [
+    { "title": "Resume builder", "startDate": "2025-08-18", "endDate": null, "index": 2 },
+    {
+      "title": "Interactive card game with web interface",
+      "startDate": "2024-10-01",
+      "endDate": null,
+      "index": 0
+    },
+    {
+      "title": "Water Delivery Bot & CRM",
+      "startDate": "2018-07-01",
+      "endDate": "2018-10-01",
+      "index": 1
+    }
+  ],
+  "languages": [
+    { "name": "English", "level": "Full Professional Proficiency", "index": 0 },
+    { "name": "Ukrainian", "level": "Native or Bilingual Proficiency", "index": 1 },
+    { "name": "Russian", "level": "Native or Bilingual Proficiency", "index": 2 }
+  ],
+  "certifications": [
+    {
+      "title": "AWS Academy Cloud Foundations",
+      "startDate": "2022-05-01",
+      "endDate": "2022-07-01",
+      "index": 0
+    }
+  ]
+}
