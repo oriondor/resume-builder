@@ -44,6 +44,8 @@
   const trigger = ref(null);
   const popover = ref(null);
 
+  const { width: popoverWidth, height: popoverHeight } = useElementBounding(popover);
+
   const showPopover = ref(false);
   const triggerRect = ref(null);
   const popoverRect = ref(null);
@@ -207,21 +209,23 @@
   /**
    * Updates position of popover on scroll/resize if popover is open.
    */
-  function handleWindowScrollOrResize() {
+  function redrawPopover() {
     if (!showPopover.value) return;
     updateRects();
   }
 
+  watch([popoverWidth, popoverHeight], redrawPopover);
+
   onMounted(() => {
     document.addEventListener("click", handleDocumentClick);
-    window.addEventListener("scroll", handleWindowScrollOrResize, true);
-    window.addEventListener("resize", handleWindowScrollOrResize, true);
+    window.addEventListener("scroll", redrawPopover, true);
+    window.addEventListener("resize", redrawPopover, true);
   });
 
   onBeforeUnmount(() => {
     document.removeEventListener("click", handleDocumentClick);
-    window.removeEventListener("scroll", handleWindowScrollOrResize, true);
-    window.removeEventListener("resize", handleWindowScrollOrResize, true);
+    window.removeEventListener("scroll", redrawPopover, true);
+    window.removeEventListener("resize", redrawPopover, true);
   });
 </script>
 <style lang="scss" scoped>

@@ -2,6 +2,9 @@
   import type { SelectableOption, SelectProps } from "../HelperComponents/Selector.vue";
 
   const props = defineProps<SelectProps>();
+
+  const { options } = toRefs(props);
+
   const modelValue = defineModel<SelectableOption[]>({ required: true });
 
   // Can be a model if needed
@@ -16,6 +19,8 @@
   const currentInstance = getCurrentInstance();
   const allowTagging = computed(() => !!currentInstance?.vnode.props?.onTag);
 
+  const filteredTags = useFuzzySearch(options, search, { keys: ["name"] });
+
   function onEnterPress() {
     if (!allowTagging.value) return;
     emit("tag", search.value);
@@ -24,7 +29,7 @@
 </script>
 
 <template>
-  <helper-selector v-model="modelValue" v-bind="props" :options multiple>
+  <helper-selector v-model="modelValue" v-bind="props" :options="filteredTags" multiple>
     <template #trigger-label="{ getOptionLabel, getOptionKey }">
       <helper-tag
         v-for="option in modelValue"
