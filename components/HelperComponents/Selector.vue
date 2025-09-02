@@ -11,6 +11,7 @@
 
   const props = withDefaults(defineProps<SelectProps>(), {
     placeholder: "Select an option",
+    field: "id",
   });
 
   const { field, optionName, placeholder } = toRefs(props);
@@ -20,8 +21,8 @@
   });
 
   // Key to the object when option is not 'string'
-  const key = computed(() => (field.value ?? "id") as Extract<keyof T, string>);
-  const label = computed(() => (optionName.value ?? "id") as Extract<keyof T, string>);
+  const key = computed(() => field.value as Extract<keyof T, string>);
+  const label = computed(() => optionName.value as Extract<keyof T, string>);
 
   const flatModalValue = computed(() => {
     if (!modelValue.value) return null;
@@ -76,7 +77,7 @@
     return String((option as T)[key.value]);
   }
 
-  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel }));
+  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel, labelKey: label.value }));
 </script>
 
 <template>
