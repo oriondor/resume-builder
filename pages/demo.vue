@@ -25,6 +25,8 @@
 
 <template>
   <div>
+    <select-theme label="Set theme" />
+    <select-mode label="Set mode" />
     <helper-button> Click Me </helper-button>
     <helper-input v-model="text" placeholder="Enter text" />
     <helper-textarea v-model="text" placeholder="Enter more text" />
@@ -38,7 +40,7 @@
     <hr />
     <view-text>Some text here</view-text>
     <hr />
-    <view-heading text="This is a heading" />
+    <view-text type="title" size="large">This is a heading</view-text>
     <hr />
     <helper-check-box v-model="checkboxValue"> Checkbox text </helper-check-box>
     <hr />
@@ -50,7 +52,6 @@
       label="Test skills"
       @tag="createSkill"
     />
-    <select-theme />
     <helper-selector v-model="selectedOption" :options field="id" option-name="name" />
   </div>
 </template>

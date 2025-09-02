@@ -139,33 +139,45 @@
 
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 0.5rem 0.75rem;
     font-size: 0.95rem;
     color: var(--color-text);
     transition:
       border-color 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
 
     &:hover {
       border-color: var(--color-accent);
+      background-color: var(--color-surface); /* subtle lift */
     }
+
     &:focus-within {
       border-color: var(--color-accent);
       box-shadow: 0 0 0 2px var(--color-accent-soft);
+    }
+
+    .icon {
+      color: var(--color-muted);
+      transition: color 0.2s ease;
+    }
+
+    &:hover .icon {
+      color: var(--color-accent);
     }
   }
 
   .selector-content {
     min-width: 15rem;
-    min-height: 2rem;
     max-height: 20rem;
     overflow: auto;
+
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-top: 0.25rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     ul {
       list-style: none;
@@ -175,10 +187,14 @@
       li {
         padding: 0.5rem 0.75rem;
         cursor: pointer;
-        transition: background-color 0.15s ease;
+        transition:
+          background-color 0.15s ease,
+          color 0.15s ease;
+
+        color: var(--color-text);
 
         &:hover {
-          background-color: var(--color-accent-soft);
+          background-color: var(--color-surface); /* neutral lift */
         }
 
         &.selected {
