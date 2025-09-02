@@ -35,19 +35,19 @@
     }
 
     &.text {
-      color: #333;
+      color: var(--color-text);
     }
     &.title {
       font-weight: bold;
-      color: #111;
+      color: var(--color-text);
     }
     &.subtitle {
       font-weight: semi-bold;
-      color: #222;
+      color: var(--color-muted);
     }
     &.italics {
       font-style: italic;
-      color: #444;
+      color: var(--color-muted);
     }
 
     &.small {

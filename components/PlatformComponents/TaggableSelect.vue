@@ -2,6 +2,9 @@
   import type { SelectableOption, SelectProps } from "../HelperComponents/Selector.vue";
 
   const props = defineProps<SelectProps>();
+
+  const { options } = toRefs(props);
+
   const modelValue = defineModel<SelectableOption[]>({ required: true });
 
   // Can be a model if needed
@@ -16,16 +19,25 @@
   const currentInstance = getCurrentInstance();
   const allowTagging = computed(() => !!currentInstance?.vnode.props?.onTag);
 
-  function onEnterPress() {
+  const filteredTags = useFuzzySearch(options, search, { keys: ["name"] });
+
+  function onEnterPress<T extends object = object>(key: Extract<keyof T, string>) {
     if (!allowTagging.value) return;
+    // Check if exact match already exists - then block tagging
+    const exists = options.value.some((option) =>
+      typeof option === "string"
+        ? (option as string) === search.value
+        : ((option as T)[key] as string) === search.value
+    );
+    if (exists) return;
     emit("tag", search.value);
     search.value = "";
   }
 </script>
 
 <template>
-  <helper-selector v-model="modelValue" v-bind="props" :options multiple>
-    <template #trigger-label="{ getOptionLabel, getOptionKey }">
+  <helper-selector v-model="modelValue" v-bind="props" :options="filteredTags" multiple>
+    <template #trigger-label="{ getOptionLabel, getOptionKey, labelKey }">
       <helper-tag
         v-for="option in modelValue"
         :key="getOptionKey(option)"
@@ -35,7 +47,7 @@
         v-model="search"
         :placeholder="!modelValue.length ? 'Select options' : ''"
         appearance="minimal"
-        @keydown.enter.stop="onEnterPress"
+        @keydown.enter.stop="onEnterPress(labelKey)"
       />
     </template>
     <template #option="{ option, selected, getOptionLabel }">

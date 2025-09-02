@@ -2,7 +2,7 @@
   export type SelectableOption<T extends object = object> = string | T;
 
   export interface SelectProps<T extends object = object> {
-    options: string[] | T[];
+    options: T[];
     multiple?: boolean;
     field?: string;
     optionName?: string;
@@ -11,6 +11,7 @@
 
   const props = withDefaults(defineProps<SelectProps>(), {
     placeholder: "Select an option",
+    field: "id",
   });
 
   const { field, optionName, placeholder } = toRefs(props);
@@ -20,8 +21,8 @@
   });
 
   // Key to the object when option is not 'string'
-  const key = computed(() => (field.value ?? "id") as Extract<keyof T, string>);
-  const label = computed(() => (optionName.value ?? "id") as Extract<keyof T, string>);
+  const key = computed(() => field.value as Extract<keyof T, string>);
+  const label = computed(() => optionName.value as Extract<keyof T, string>);
 
   const flatModalValue = computed(() => {
     if (!modelValue.value) return null;
@@ -76,7 +77,7 @@
     return String((option as T)[key.value]);
   }
 
-  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel }));
+  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel, labelKey: label.value }));
 </script>
 
 <template>
@@ -139,33 +140,45 @@
 
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 0.5rem 0.75rem;
     font-size: 0.95rem;
     color: var(--color-text);
     transition:
       border-color 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
 
     &:hover {
       border-color: var(--color-accent);
+      background-color: var(--color-surface); /* subtle lift */
     }
+
     &:focus-within {
       border-color: var(--color-accent);
       box-shadow: 0 0 0 2px var(--color-accent-soft);
+    }
+
+    .icon {
+      color: var(--color-muted);
+      transition: color 0.2s ease;
+    }
+
+    &:hover .icon {
+      color: var(--color-accent);
     }
   }
 
   .selector-content {
     min-width: 15rem;
-    min-height: 2rem;
     max-height: 20rem;
     overflow: auto;
+
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-top: 0.25rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     ul {
       list-style: none;
@@ -175,10 +188,14 @@
       li {
         padding: 0.5rem 0.75rem;
         cursor: pointer;
-        transition: background-color 0.15s ease;
+        transition:
+          background-color 0.15s ease,
+          color 0.15s ease;
+
+        color: var(--color-text);
 
         &:hover {
-          background-color: var(--color-accent-soft);
+          background-color: var(--color-surface); /* neutral lift */
         }
 
         &.selected {

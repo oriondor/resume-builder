@@ -1,4 +1,4 @@
-/* 1) Role-based tokens (use these in your CSS) */
+/* 1) Role-based tokens (don’t change these names in CSS) */
 :root {
   --color-bg: #ffffff;
   --color-surface: #f7f8fa;
@@ -6,123 +6,70 @@
   --color-muted: #626a78;
   --color-border: #e6e8ec;
 
-  /* Accent family (changed by theme) */
-  --color-accent: #1f3a8a; /* main */
-  --color-accent-ink: #ffffff; /* text over accent */
-  --color-accent-soft: #eef2ff; /* light background chip/bg */
-  --color-accent-border: #c7d2fe; /* borders on soft bg */
+  /* Accent family */
+  --color-accent: #1f3a8a;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #eef2ff;
+  --color-accent-border: #c7d2fe;
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 85%, black 15%);
+  --color-accent-active: color-mix(in srgb, var(--color-accent) 75%, black 25%);
 }
 
-/* 2) Themes (swap globally by name) */
-/* NAVY */
+/* 2) Category themes (light vs dark) */
+
+/* Light (default, already matches your root) */
+:root[data-mode="light"] {
+  --color-bg: #ffffff;
+  --color-surface: #f7f8fa;
+  --color-text: #0e1116;
+  --color-muted: #626a78;
+  --color-border: #e6e8ec;
+}
+
+/* Dark */
+:root[data-mode="dark"] {
+  --color-bg: #0e1116;
+  --color-surface: #1a1d23;
+  --color-text: #ffffff;
+  --color-muted: #a0a7b5;
+  --color-border: #2e333d;
+
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 12%, #0e1116);
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 40%, #0e1116);
+
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 90%, white 15%);
+  --color-accent-active: color-mix(in srgb, var(--color-accent) 80%, white 25%);
+}
+
+/* 3) Accent themes (just accents, independent of light/dark) */
+
 :root[data-theme="navy"] {
   --color-accent: hsl(219 20% 25%);
-  --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(221 100% 97%);
   --color-accent-border: hsl(221 61% 84%);
 }
 
-/* TEAL */
 :root[data-theme="teal"] {
   --color-accent: hsl(174 72% 28%);
-  --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(174 55% 94%);
   --color-accent-border: hsl(174 40% 75%);
 }
 
-/* FOREST */
 :root[data-theme="forest"] {
   --color-accent: hsl(152 45% 25%);
-  --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(152 45% 94%);
   --color-accent-border: hsl(152 30% 72%);
 }
 
-/* WINE */
 :root[data-theme="wine"] {
   --color-accent: hsl(350 55% 34%);
-  --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(350 60% 96%);
   --color-accent-border: hsl(350 35% 78%);
 }
 
-/* ROYAL */
 :root[data-theme="royal"] {
   --color-accent: hsl(230 60% 40%);
-  --color-accent-ink: #ffffff;
   --color-accent-soft: hsl(230 65% 96%);
   --color-accent-border: hsl(230 35% 78%);
-}
-
-/* Text */
-.text-base {
-  color: var(--color-text);
-}
-.text-muted {
-  color: var(--color-muted);
-}
-
-/* Backgrounds */
-.bg-page {
-  background: var(--color-bg);
-}
-.bg-surface {
-  background: var(--color-surface);
-}
-.bg-accent {
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
-}
-.bg-accent .text {
-  color: var(--color-accent-ink) !important;
-}
-.bg-accent-soft {
-  background: var(--color-accent-soft);
-}
-
-/* Borders / dividers */
-.border {
-  border: 1px solid var(--color-border);
-}
-.hr {
-  border: 0;
-  border-top: 1px solid var(--color-border);
-  margin: 0.75rem 0;
-}
-
-/* Links & buttons */
-.link {
-  color: var(--color-accent);
-}
-.btn-accent {
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
-  border-radius: 6px;
-  padding: 0.4rem 0.7rem;
-}
-.btn-ghost {
-  color: var(--color-accent);
-  background: transparent;
-  border: 1px solid currentColor;
-  border-radius: 6px;
-}
-
-/* Chips / tags / callouts */
-.chip {
-  background: var(--color-accent-soft);
-  border: 1px solid var(--color-accent-border);
-  color: var(--color-text);
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-}
-.callout {
-  background: var(--color-accent-soft);
-  border-left: 4px solid var(--color-accent);
-  padding: 0.6rem 0.8rem;
-}
-
-/* Focus ring (keyboard a11y) */
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
 }
