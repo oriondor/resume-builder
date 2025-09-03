@@ -21,7 +21,6 @@
 
 <style lang="scss" scoped>
   .control {
-    flex: 1;
     margin: 1rem;
 
     .control-label {

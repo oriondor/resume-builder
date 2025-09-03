@@ -77,7 +77,7 @@
     return String((option as T)[key.value]);
   }
 
-  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel, labelKey: label.value }));
+  const selectorAttrs = computed(() => ({ getOptionKey, getOptionLabel }));
 </script>
 
 <template>
@@ -123,6 +123,7 @@
               </slot>
             </li>
           </ul>
+          <slot name="options-addon" />
         </div>
       </template>
     </helper-popover>
@@ -131,6 +132,7 @@
 
 <style lang="scss" scoped>
   .selector-trigger {
+    z-index: 1;
     min-height: 1.5rem;
     user-select: none;
     display: flex;

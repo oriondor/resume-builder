@@ -53,6 +53,7 @@
 
 <style lang="scss" scoped>
   button {
+    width: 100%;
     background-color: var(--color-accent);
     color: var(--color-accent-ink);
     border: 1px solid transparent;

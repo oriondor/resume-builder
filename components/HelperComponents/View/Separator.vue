@@ -1,0 +1,25 @@
+<script setup lang="ts">
+  interface Props {
+    style?: "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge";
+    size?: number | string;
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    style: "solid",
+    size: 1,
+  });
+
+  const sizePx = computed(() => `${props.size}px`);
+</script>
+
+<template>
+  <div />
+</template>
+
+<style scoped>
+  div {
+    width: 100%;
+    border-block-end: v-bind(sizePx) v-bind(style) var(--color-border);
+    margin-block: 1rem;
+  }
+</style>

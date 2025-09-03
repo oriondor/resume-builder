@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   css: [
     "@/assets/css/colors.css",
     "@/assets/css/general.css",
+    "@/assets/css/scroll.css",
     "@/assets/css/cool-gradient-hover.scss",
   ],
 
@@ -32,4 +33,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@pinia/nuxt",
   ],
+  app: {
+    pageTransition: { name:'page', mode: 'out-in' }
+  },
 });
