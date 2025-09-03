@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends object">
   import type { SelectableOption, SelectProps } from "../HelperComponents/Selector.vue";
 
   const props = defineProps<SelectProps>();
 
-  const { options } = toRefs(props);
+  const { options, optionName } = toRefs(props);
 
   const modelValue = defineModel<SelectableOption[]>({ required: true });
 
@@ -21,15 +21,18 @@
 
   const filteredTags = useFuzzySearch(options, search, { keys: ["name"] });
 
-  function onEnterPress<T extends object = object>(key: Extract<keyof T, string>) {
-    if (!allowTagging.value) return;
-    // Check if exact match already exists - then block tagging
-    const exists = options.value.some((option) =>
+  const label = computed(() => optionName.value as Extract<keyof T, string>);
+
+  const exactMatchExists = computed(() => options.value.some((option) =>
       typeof option === "string"
         ? (option as string) === search.value
-        : ((option as T)[key] as string) === search.value
-    );
-    if (exists) return;
+        : ((option as T)[label.value] as string) === search.value
+    ) )
+
+  function createTag() {
+    if (!allowTagging.value) return;
+    // Check if exact match already exists - then block tagging
+    if (exactMatchExists.value) return;
     emit("tag", search.value);
     search.value = "";
   }
@@ -37,7 +40,7 @@
 
 <template>
   <helper-selector v-model="modelValue" v-bind="props" :options="filteredTags" multiple>
-    <template #trigger-label="{ getOptionLabel, getOptionKey, labelKey }">
+    <template #trigger-label="{ getOptionLabel, getOptionKey, toggle }">
       <helper-tag
         v-for="option in modelValue"
         :key="getOptionKey(option)"
@@ -47,13 +50,21 @@
         v-model="search"
         :placeholder="!modelValue.length ? 'Select options' : ''"
         appearance="minimal"
-        @keydown.enter.stop="onEnterPress(labelKey)"
+        @keydown.enter.stop="createTag"
+        @keydown="toggle(true)"
       />
     </template>
     <template #option="{ option, selected, getOptionLabel }">
       <div class="option-content">
         <helper-check-box :model-value="selected" @click.prevent />
         <helper-tag :text="getOptionLabel(option)" />
+      </div>
+    </template>
+    <template v-if="search && !exactMatchExists" #options-addon>
+      <div class="add-new-tag">
+        <helper-button icon="material-symbols:add-2" type="subdued" appearance="minimal" @click="createTag">
+          Create {{ search }}
+        </helper-button>
       </div>
     </template>
   </helper-selector>
@@ -77,5 +88,11 @@
     gap: 0.25rem;
     flex-wrap: wrap;
     padding: 0.25rem;
+  }
+  :deep(.trigger-content .control) {
+    flex: 1;
+  }
+  .add-new-tag :deep(.control) {
+    flex: 1;
   }
 </style>
