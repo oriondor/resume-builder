@@ -2,7 +2,7 @@
   export type SelectableOption<T extends object = object> = string | T;
 
   export interface SelectProps<T extends object = object> {
-    options: T[];
+    options: SelectableOption[];
     multiple?: boolean;
     field?: string;
     optionName?: string;

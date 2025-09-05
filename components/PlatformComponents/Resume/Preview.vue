@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { Resume } from "~/types/resume";
+
   export interface Templates {
     name: string;
     description: string;
@@ -6,7 +8,7 @@
 
   const templates = ref<Templates[]>([]);
 
-  const { resume } = useResume();
+  const resume = defineModel<Resume>("resume", { required: true });
 </script>
 
 <template>
@@ -18,10 +20,10 @@
           <view-text v-model="resume.title" type="subtitle" />
           <view-text v-if="resume.shortSentence" v-model="resume.shortSentence" type="text" />
         </div>
-        <div class="section contact bg-accent">
-            <a v-if="resume?.contact?.email" :href="`mailto:${resume.contact.email}`">
-              <view-text v-model="resume.contact.email" type="text" icon="ic:baseline-email" />
-            </a>
+        <div class="section contact">
+          <a v-if="resume?.contact?.email" :href="`mailto:${resume.contact.email}`">
+            <view-text v-model="resume.contact.email" type="text" icon="ic:baseline-email" />
+          </a>
           <a v-for="(phone, index) in resume.contact.phones" :key="phone" :href="`tel:${phone}`">
             <view-text
               v-model="resume.contact.phones[index]"
@@ -92,8 +94,8 @@
             <div class="skills-list">
               <helper-tag
                 v-for="skill in resume.skills"
-                :key="skill"
-                :text="skill"
+                :key="skill.id"
+                :text="skill.name"
                 variant="accent"
               />
             </div>
@@ -121,7 +123,11 @@
               Interests
             </view-text>
             <div class="skills-list">
-              <helper-tag v-for="interest in resume.interests" :key="interest" :text="interest" />
+              <helper-tag
+                v-for="interest in resume.interests"
+                :key="interest.id"
+                :text="interest.name"
+              />
             </div>
           </div>
         </div>
@@ -147,7 +153,7 @@
     height: 297mm;
     margin: 0;
     padding: 0;
-    background: #fff;
+    background: var(--color-bg);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
     color: #222;
     font: 10pt/1.35 var(--resume-font, "Inter", system-ui, sans-serif);
@@ -173,6 +179,7 @@
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+    background-color: var(--color-accent);
   }
   .summary {
     padding: 4mm;

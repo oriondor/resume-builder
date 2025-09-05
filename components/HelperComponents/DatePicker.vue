@@ -10,7 +10,7 @@
 <template>
   <helper-control-element class="date-picker">
     <label class="date-picker-label">
-      <input v-model="date" :type="month ? 'month' : 'date'" class="date-input" />
+      <input v-model="date" :type="month ? 'month' : 'date'" class="date-input" >
       <slot />
     </label>
   </helper-control-element>

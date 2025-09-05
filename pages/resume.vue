@@ -1,11 +1,26 @@
 <script setup lang="ts">
-  //   const { resume } = useResume();
+  import type { Resume } from "~/types/resume";
+
+  const resume = useSessionStorage<Resume>("resume", {
+    fullName: "",
+    title: "",
+    shortSentence: "",
+    contact: { email: "", phones: [], address: "" },
+    summary: "",
+    experience: [],
+    education: [],
+    personalProjects: [],
+    languages: [],
+    skills: [],
+    certifications: [],
+    interests: [],
+  });
 </script>
 
 <template>
   <div class="builder">
-    <side-bar class="no-print" />
-    <preview />
+    <side-bar :resume class="no-print" />
+    <preview :resume />
   </div>
 </template>
 
@@ -20,7 +35,6 @@
   }
 </style>
 <style>
-
   @media print {
     @page {
       size: A4;

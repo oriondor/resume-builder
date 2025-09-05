@@ -1,7 +1,12 @@
 <script setup lang="ts" generic="T extends object">
+  import type { TagStyle } from "~/types/tags";
   import type { SelectableOption, SelectProps } from "../HelperComponents/Selector.vue";
 
-  const props = defineProps<SelectProps>();
+  interface Props extends SelectProps {
+    variant?: TagStyle;
+  }
+
+  const props = defineProps<Props>();
 
   const { options, optionName } = toRefs(props);
 
@@ -23,11 +28,13 @@
 
   const label = computed(() => optionName.value as Extract<keyof T, string>);
 
-  const exactMatchExists = computed(() => options.value.some((option) =>
+  const exactMatchExists = computed(() =>
+    options.value.some((option) =>
       typeof option === "string"
         ? (option as string) === search.value
         : ((option as T)[label.value] as string) === search.value
-    ) )
+    )
+  );
 
   function createTag() {
     if (!allowTagging.value) return;
@@ -45,6 +52,7 @@
         v-for="option in modelValue"
         :key="getOptionKey(option)"
         :text="getOptionLabel(option)"
+        :variant
       />
       <helper-input
         v-model="search"
@@ -57,12 +65,17 @@
     <template #option="{ option, selected, getOptionLabel }">
       <div class="option-content">
         <helper-check-box :model-value="selected" @click.prevent />
-        <helper-tag :text="getOptionLabel(option)" />
+        <helper-tag :text="getOptionLabel(option)" :variant />
       </div>
     </template>
     <template v-if="search && !exactMatchExists" #options-addon>
       <div class="add-new-tag">
-        <helper-button icon="material-symbols:add-2" type="subdued" appearance="minimal" @click="createTag">
+        <helper-button
+          icon="material-symbols:add-2"
+          type="subdued"
+          appearance="minimal"
+          @click="createTag"
+        >
           Create {{ search }}
         </helper-button>
       </div>
@@ -92,7 +105,7 @@
   :deep(.trigger-content .control) {
     flex: 1;
   }
-  .add-new-tag :deep(.control) {
-    flex: 1;
+  .add-new-tag :deep(button) {
+    width: 100%;
   }
 </style>

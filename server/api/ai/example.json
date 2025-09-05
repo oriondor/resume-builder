@@ -60,25 +60,8 @@
       "location": "Poland"
     }
   ],
-  "skills": [
-    "Django",
-    "Docker",
-    "websocket",
-    "Elasticsearch",
-    "Celery",
-    "Unix",
-    "Git",
-    "Python",
-    "JavaScript",
-    "TypeScript",
-    "Vue.js",
-    "Node.js",
-    "MongoDB",
-    "PostgreSQL",
-    "MySQL",
-    "REST API"
-  ],
-  "interests": ["Traveling", "Cooking", "Scuba diving", "Skiing", "Crypto"],
+  "skills": [],
+  "interests": [],
   "personalProjects": [
     { "title": "Resume builder", "startDate": "2025-08-18", "endDate": null, "index": 2 },
     {

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+  import type { TagStyle } from "~/types/tags";
+
   interface Props {
     text: string;
-    variant?: "neutral" | "accent";
+    variant?: TagStyle;
   }
   withDefaults(defineProps<Props>(), {
     variant: "neutral",
