@@ -14,8 +14,13 @@ export default defineNuxtConfig({
     },
     { path: "~/components/HelperComponents/View", pathPrefix: true, prefix: "view" },
     { path: "~/components/PlatformComponents", pathPrefix: false },
+    {
+      path: "~/components/PlatformComponents/Resume/SideBar/Sections",
+      prefix: "sections",
+    },
   ],
   css: [
+    "@/assets/css/animation.css",
     "@/assets/css/colors.css",
     "@/assets/css/general.css",
     "@/assets/css/scroll.css",
@@ -34,6 +39,6 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
   ],
   app: {
-    pageTransition: { name:'page', mode: 'out-in' }
+    pageTransition: { name: "page", mode: "out-in" },
   },
 });
