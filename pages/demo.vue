@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { SkillItem } from "~/types/resume";
+
   const text = ref("");
   const singleDate = ref("");
   const dateRange = ref<["", ""]>(["", ""]);
@@ -7,18 +9,11 @@
   const selectedOptions = ref<SkillItem[]>([]);
   const selectedOption = ref<SkillItem | null>(null);
 
-  const { data: options, refresh } = await useFetch<SkillItem[]>("/api/skills", {
-    default: () => [],
-  });
+  const { tags: options, createTag, refresh } = await useTags("skills");
 
-  async function createSkill(skillName: string) {
-    console.log(skillName);
-
-    const newSkill = await $fetch("/api/skills", {
-      method: "POST",
-      body: { name: skillName },
-    });
-    selectedOptions.value.push(newSkill);
+  async function createNewSkill(name: string) {
+    const newSkill = await createTag(name);
+    selectedOptions.value.push(newSkill as SkillItem);
     refresh();
   }
 </script>
@@ -59,18 +54,13 @@
       field="id"
       option-name="name"
       label="Test skills"
-      @tag="createSkill"
+      @tag="createNewSkill"
     />
     <helper-selector v-model="selectedOption" :options field="id" option-name="name" />
   </div>
 </template>
 
 <style scoped>
-  /* .column {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  } */
   .flex {
     display: flex;
   }
