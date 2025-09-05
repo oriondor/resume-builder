@@ -171,7 +171,7 @@
       <div v-if="loading" class="preview-loading">Rendering preview…</div>
 
       <!-- Image preview -->
-      <img v-if="previewImgUrl" :src="previewImgUrl" alt="preview" class="preview-image" />
+      <img v-if="previewImgUrl" :src="previewImgUrl" alt="preview" class="preview-image" >
 
       <!-- PDF preview -->
       <canvas v-else-if="file.type === 'application/pdf'" ref="pdfCanvas" class="preview-canvas" />
