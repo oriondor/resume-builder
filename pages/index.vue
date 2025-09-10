@@ -1,6 +1,10 @@
 <script setup lang="ts">
+  import type { AIResume } from "~/types/resume";
+
   const { uploadResume } = useOpenAi();
   const { resume } = useResume();
+  const { processResume } = useResumeProcessing();
+
   const file = ref<File | null>(null);
 
   const loading = ref(false);
@@ -14,7 +18,7 @@
       // ideally before it should be marked as non-resume file
       return;
     }
-    resume.value = expectedResume.data;
+    resume.value = await processResume(expectedResume.data as AIResume);
     navigateTo("/resume");
   }
 </script>

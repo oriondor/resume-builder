@@ -1,3 +1,18 @@
+export interface AIResume {
+  fullName: string;
+  title: string;
+  shortSentence?: string;
+  summary: string;
+  contact: ContactItem;
+  experience: ExperienceItem[];
+  education: EducationItem[];
+  skills: string[];
+  personalProjects: PersonalProjectsItem[];
+  languages: LanguageItem[];
+  certifications: CertificationItem[];
+  interests: string[];
+}
+
 export interface Resume {
   fullName: string;
   title: string;
@@ -73,3 +88,5 @@ export interface InterestItem {
   name: string;
   created_at: string;
 }
+
+export type TagCategory = "skills" | "interests";

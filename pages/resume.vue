@@ -1,20 +1,5 @@
 <script setup lang="ts">
-  import type { Resume } from "~/types/resume";
-
-  const resume = useSessionStorage<Resume>("resume", {
-    fullName: "",
-    title: "",
-    shortSentence: "",
-    contact: { email: "", phones: [], address: "" },
-    summary: "",
-    experience: [],
-    education: [],
-    personalProjects: [],
-    languages: [],
-    skills: [],
-    certifications: [],
-    interests: [],
-  });
+  const { resume } = useResume();
 </script>
 
 <template>

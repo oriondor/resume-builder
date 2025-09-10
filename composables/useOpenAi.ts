@@ -1,6 +1,8 @@
+import type { AIResume } from "~/types/resume";
+
 export interface ExpectedResume {
   error?: string;
-  data?: Resume;
+  data?: AIResume;
 }
 
 export function useOpenAi() {
