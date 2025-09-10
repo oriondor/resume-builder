@@ -4,7 +4,8 @@
 
   const resume = defineModel<Resume>("resume", { required: true });
 
-  const { tags: options, createTag, refresh } = await useTags("interests");
+  const { tags: options, createTag, refresh } = useTags("interests");
+  refresh();
 
   async function createNewInterest(name: string) {
     const newInterest = await createTag(name);

@@ -5,6 +5,7 @@
   const resume = defineModel<Resume>("resume", { required: true });
 
   const { tags: options, createTag, refresh } = useTags("skills");
+  refresh();
 
   async function createNewSkill(name: string) {
     const newSkill = await createTag(name);
