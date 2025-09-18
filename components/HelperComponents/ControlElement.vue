@@ -13,7 +13,7 @@
 <template>
   <div class="control" :class="[appearance]">
     <label v-if="$attrs.label" class="control-label">{{ $attrs.label }}</label>
-    <div class="slot-wrapper">
+    <div class="slot-wrapper" v-bind="$attrs">
       <slot />
     </div>
   </div>
