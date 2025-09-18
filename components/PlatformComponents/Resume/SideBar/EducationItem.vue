@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  const collapsed = ref(false);
+  import type { EducationItem } from "~/types/resume";
+
+  const collapsed = ref(true);
   const modelValue = defineModel<EducationItem>({ required: true });
 </script>
 
