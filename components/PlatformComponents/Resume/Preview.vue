@@ -180,6 +180,9 @@
     gap: 1rem;
     padding: 1rem;
     background-color: var(--color-accent);
+    .text {
+      color: var(--color-accent-soft);
+    }
   }
   .summary {
     padding: 4mm;
