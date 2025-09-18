@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  const collapsed = ref(false);
+  import type { ExperienceItem } from "~/types/resume";
+
+  const collapsed = ref(true);
   const modelValue = defineModel<ExperienceItem>({ required: true });
 
   const dates = ref<[string, string | null]>([
