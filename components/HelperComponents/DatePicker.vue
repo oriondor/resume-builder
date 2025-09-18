@@ -1,23 +1,25 @@
 <script setup lang="ts">
+  import { nanoid } from "nanoid";
+
   interface Props {
     month?: boolean;
   }
   defineProps<Props>();
 
   const date = defineModel<string | null | undefined>("date", { required: true });
+
+  const randomName = computed(() => `date-${nanoid(8)}`);
 </script>
 
 <template>
-  <helper-control-element class="date-picker">
-    <label class="date-picker-label">
-      <input v-model="date" :type="month ? 'month' : 'date'" class="date-input" >
-      <slot />
-    </label>
+  <helper-control-element class="date-picker" v-bind="$attrs">
+    <input v-model="date" :type="month ? 'month' : 'date'" class="date-input" :name="randomName" />
   </helper-control-element>
 </template>
 
 <style scoped>
   .date-picker * {
+    width: 100%;
     cursor: pointer;
   }
 
@@ -29,8 +31,9 @@
     color: var(--color-text);
   }
 
-  /* Input base */
   .date-input {
+    /* border-box allows correct sizing for input */
+    box-sizing: border-box;
     appearance: none;
     background-color: var(--color-bg);
     border: 1px solid var(--color-border);
