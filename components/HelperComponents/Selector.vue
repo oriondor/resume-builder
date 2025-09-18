@@ -158,7 +158,7 @@
 
     &:focus-within {
       border-color: var(--color-accent);
-      box-shadow: 0 0 0 2px var(--color-accent-soft);
+      box-shadow: 0 0 0 2px var(--color-surface);
     }
 
     .icon {
@@ -201,8 +201,8 @@
         }
 
         &.selected {
-          background-color: var(--color-accent-soft);
-          color: var(--color-accent);
+          background-color: var(--color-accent);
+          color: var(--color-accent-soft);
           font-weight: 500;
         }
       }
