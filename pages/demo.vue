@@ -57,6 +57,13 @@
       @tag="createNewSkill"
     />
     <helper-selector v-model="selectedOption" :options field="id" option-name="name" />
+    <view-separator />
+    <div class="flex fancy-check-boxes">
+      <helper-check-box checked-icon="noto:goose" />
+      <helper-check-box checked-icon="icon-park-outline:elephant" />
+      <helper-check-box unchecked-icon="pepicons-pencil:seedling-circle-filled" />
+      <helper-check-box unchecked-icon="lucide-lab:elephant" checked-icon="mdi:elephant" />
+    </div>
   </div>
 </template>
 
