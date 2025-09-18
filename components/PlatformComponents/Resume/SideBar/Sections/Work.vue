@@ -27,7 +27,7 @@
       <experience-item
         v-for="(item, index) in resume.experience"
         :key="item.index"
-        v-model="resume.experience[resume.experience.indexOf(item)] as ExperienceItem"
+        v-model="resume.experience[index] as ExperienceItem"
         @remove="removeItem(resume.experience, item.index)"
       />
       <helper-dashed-container
