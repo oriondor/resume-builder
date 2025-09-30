@@ -18,6 +18,10 @@ export default defineNuxtConfig({
       path: "~/components/PlatformComponents/Resume/SideBar/Sections",
       prefix: "sections",
     },
+    {
+      path: "~/components/PlatformComponents/Resume/Preview/Sections",
+      prefix: "print-sections",
+    },
   ],
   css: [
     "@/assets/css/animation.css",

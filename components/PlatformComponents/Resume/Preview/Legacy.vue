@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { Resume } from "~/types/resume";
 
-  export interface Templates {
+  interface Templates {
     name: string;
     description: string;
   }

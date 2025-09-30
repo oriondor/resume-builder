@@ -30,11 +30,26 @@
 </template>
 
 <style lang="css" scoped>
+  /* left column */
   .sidebar {
+    height: 100%;
     overflow: auto;
-    max-height: 100vh;
     max-width: 40%;
     padding: 1rem;
+    box-sizing: border-box;
+
+    overscroll-behavior: contain; /* stop wheel/trackpad bubbling to root */
+    overflow-anchor: none; /* stop Chrome from root “anchoring” jumps */
+    scrollbar-gutter: stable both-edges; /* avoid layout shift when bar appears */
+  }
+
+  /* right column root container (whatever wraps the pages) */
+  .preview-root {
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+    overflow-anchor: none;
+    scrollbar-gutter: stable both-edges;
   }
 
   .mode-selector {
