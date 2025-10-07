@@ -30,6 +30,7 @@
     "drauu": "^0.4.3",
     "focus-trap": "^7.6.5",
     "fuse.js": "^7.1.0",
+    "gsap": "^3.13.0",
     "idb-keyval": "^6.2.2",
     "nprogress": "^0.2.0",
     "nuxt": "^4.0.3",
