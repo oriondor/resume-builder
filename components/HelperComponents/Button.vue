@@ -43,6 +43,7 @@
       </slot>
       <template v-if="loading">
         <helper-loading-spinner />
+        <slot />
       </template>
       <template v-else>
         <slot />
@@ -73,6 +74,10 @@
       color: var(--color-muted);
       border-color: var(--color-accent-border);
       cursor: not-allowed;
+    }
+
+    &:active {
+      border: 1px solid var(--color-accent-border);
     }
 
     &.primary {

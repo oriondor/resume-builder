@@ -23,22 +23,24 @@
   }
 </script>
 <template>
-  <div class="container">
-    <h3>Upload your old resume or create a new one with custom template</h3>
-    <file-upload v-model:file="file" />
-    <helper-button v-if="file" :loading icon="ix:maintenance" @click="processFile">
-      Process selected file
-    </helper-button>
-    or
-    <helper-button
-      :loading
-      icon="material-symbols:add-chart-outline"
-      @click="navigateTo('/resume')"
-    >
-      Create from scratch
-    </helper-button>
-    <helper-button type="subdued" @click="navigateTo('/demo')">Go to demo</helper-button>
-  </div>
+  <floating-background>
+    <div class="container">
+      <h3>Upload your old resume or create a new one with custom template</h3>
+      <file-upload v-model:file="file" />
+      <helper-button v-if="file" :loading icon="ix:maintenance" @click="processFile">
+        Process selected file
+      </helper-button>
+      or
+      <helper-button
+        :loading
+        icon="material-symbols:add-chart-outline"
+        @click="navigateTo('/resume')"
+      >
+        Create from scratch
+      </helper-button>
+      <helper-button type="subdued" @click="navigateTo('/demo')">Go to demo</helper-button>
+    </div>
+  </floating-background>
 </template>
 
 <style scoped>

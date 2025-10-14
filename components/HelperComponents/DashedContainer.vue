@@ -24,7 +24,7 @@
   <div class="dashed-container gradient-hover" @click="$emit('click')">
     <!-- <slot name="content"> -->
     <Icon v-if="icon" :name="icon" class="icon-class" :size="iconSize" />
-    <view-text v-if="text" class="text-class" :size>{{ text }}</view-text>
+    <span v-if="text" class="text-class" :size>{{ text }}</span>
     <!-- </slot> -->
   </div>
 </template>
@@ -44,6 +44,6 @@
     color: var(--color-muted);
   }
   .text-class {
-    color: var(--color-text);
+    color: var(--color-accent);
   }
 </style>
