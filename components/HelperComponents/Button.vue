@@ -38,16 +38,14 @@
       :class="[type, 'gradient-hover', { 'icon-only': isIconOnly }]"
       @click="click"
     >
-      <slot name="icon">
-        <Icon v-if="icon" :name="icon" />
-      </slot>
       <template v-if="loading">
         <helper-loading-spinner />
         <slot />
       </template>
-      <template v-else>
-        <slot />
-      </template>
+      <slot v-else name="icon">
+        <Icon v-if="icon" :name="icon" />
+      </slot>
+      <slot />
     </button>
   </helper-control-element>
 </template>
@@ -63,6 +61,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    user-select: none;
 
     &.icon-only {
       padding: 0;
@@ -88,11 +87,25 @@
       background-color: transparent;
       border: 1px solid var(--color-accent);
       color: var(--color-accent);
+      &:hover {
+        color: var(--color-accent-hover);
+      }
     }
 
     &.subdued {
       background-color: transparent;
       color: var(--color-accent);
+      &:hover {
+        color: var(--color-accent-hover);
+      }
+    }
+
+    &:active {
+      border-color: var(--color-accent-border) !important;
+    }
+
+    &:hover {
+      color: var(--color-accent-ink);
     }
   }
 </style>

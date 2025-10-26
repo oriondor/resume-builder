@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const modelValue = defineModel<boolean>({ required: true });
+  const modelValue = defineModel<boolean>({ required: false });
 
   defineProps<{
     checkedIcon?: string; // optional: pass icon name for checked state
