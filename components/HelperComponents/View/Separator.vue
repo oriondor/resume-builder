@@ -2,14 +2,17 @@
   interface Props {
     style?: "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge";
     size?: number | string;
+    margin: number;
   }
 
   const props = withDefaults(defineProps<Props>(), {
     style: "solid",
     size: 1,
+    margin: 1,
   });
 
   const sizePx = computed(() => `${props.size}px`);
+  const margin = computed(() => `${props.margin}rem`);
 </script>
 
 <template>
@@ -20,6 +23,6 @@
   div {
     width: 100%;
     border-block-end: v-bind(sizePx) v-bind(style) var(--color-border);
-    margin-block: 1rem;
+    margin-block: v-bind(margin);
   }
 </style>

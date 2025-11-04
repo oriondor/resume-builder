@@ -21,7 +21,7 @@
 
 <style lang="scss" scoped>
   .control {
-    margin: 1rem;
+    margin: 0.5rem;
 
     .control-label {
       user-select: none;
