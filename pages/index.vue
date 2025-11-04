@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { AIResume } from "~/types/resume";
+  import type { AIResume, Resume } from "~/types/resume";
 
   const { uploadResume } = useOpenAi();
   const { resume } = useResume();
@@ -12,14 +12,21 @@
   async function processFile() {
     if (!file.value) return;
     loading.value = true;
-    const expectedResume = await uploadResume(file.value);
+    const payload = await uploadResume(file.value);
+    console.log("payload", payload);
+
     loading.value = false;
-    if (expectedResume.error) {
+    if (payload.data.resume.error) {
       // ideally before it should be marked as non-resume file
       return;
     }
-    resume.value = await processResume(expectedResume.data as AIResume);
-    navigateTo("/resume");
+    try {
+      const modifiedPayload = await processResume(payload.data);
+      resume.value = modifiedPayload!.resume as Resume;
+      navigateTo("/resume");
+    } catch (e) {
+      console.error(e);
+    }
   }
 </script>
 <template>

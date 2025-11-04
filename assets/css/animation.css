@@ -1,12 +1,12 @@
 .animate-fade-slide-enter-active,
 .animate-fade-slide-leave-active {
   transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+    opacity 0.1s ease-in,
+    transform 0.1s ease-in;
 }
 
 .animate-fade-slide-enter-from,
 .animate-fade-slide-leave-to {
   opacity: 0;
-  transform: translateY(-0.5rem);
+  transform: translateY(-0.1rem);
 }
