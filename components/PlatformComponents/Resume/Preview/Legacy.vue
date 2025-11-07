@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { Resume } from "~/types/resume";
 
-  export interface Templates {
+  interface Templates {
     name: string;
     description: string;
   }
@@ -42,7 +42,7 @@
         </div>
         <div class="resume-container">
           <div class="left-side">
-            <div v-if="resume.experience.length" class="section experience">
+            <!-- <div v-if="resume.experience.length" class="section experience">
               <view-text type="title" size="large" uppercase class="title-section">
                 Work Experience
               </view-text>
@@ -67,8 +67,8 @@
                 </div>
                 <view-text v-model="item.description" type="text" />
               </div>
-            </div>
-            <div v-if="resume.education.length" class="section education">
+            </div> -->
+            <!-- <div v-if="resume.education.length" class="section education">
               <view-text type="title" size="large" uppercase class="title-section">
                 Education
               </view-text>
@@ -86,7 +86,7 @@
                 <view-text v-model="item.description" type="text" />
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="right-side">
             <view-text type="title" size="large" uppercase class="title-section">
               Skills

@@ -12,11 +12,14 @@
 <style scoped>
   .builder {
     display: flex;
-    justify-content: space-between;
     gap: 1rem;
-    max-height: 100vh;
     height: 100vh;
     overflow: hidden;
+    align-items: stretch;
+  }
+  .builder > * {
+    min-height: 0;
+    min-width: 0;
   }
 </style>
 <style>
