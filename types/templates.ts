@@ -147,15 +147,18 @@ export interface ComponentAttributes {
   placeholder: string;
 }
 
+export type CustomSectionFieldType = "text" | "title" | "subtitle" | "italics" | string;
+
 export interface CustomSectionFieldConfig {
   component: CustomSectionFieldComponent;
   attrs: ComponentAttributes;
-  type?: "title" | "subtitle" | "italics" | string;
+  type?: CustomSectionFieldType;
   order: number;
 }
 
 export type CustomSectionFieldComponent =
   | "text"
+  | "textarea"
   | "date"
   | "date-range"
   | "checkbox"

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  const { resume } = useResume();
+  const { resume, config } = useResume();
 </script>
 
 <template>
   <div class="builder">
-    <side-bar :resume class="no-print" />
-    <preview :resume />
+    <side-bar :resume :config class="no-print" />
+    <preview :resume :config />
   </div>
 </template>
 

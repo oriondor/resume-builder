@@ -28,17 +28,12 @@
     <template v-for="(item, index) in options" :key="item.index">
       <div class="item">
         <Icon
-          :name="expandedIndex === index ? 'ic:baseline-expand-more' : 'ic:baseline-expand-less'"
+          :name="expandedIndex === index ? 'line-md:chevron-up' : 'line-md:chevron-down'"
           class="icon"
           @click="expand(index)"
         />
         <Transition name="animate-fade-slide" mode="out-in">
-          <div v-if="expandedIndex === index" key="expanded" class="content">
-            <slot name="content" :index />
-          </div>
-          <div v-else key="collapsed" class="content-collapsed">
-            <slot name="content-collapsed" :index />
-          </div>
+          <slot :collapsed="expandedIndex !== index" :item :index />
         </Transition>
         <Icon name="material-symbols:delete-rounded" class="icon" @click="removeItem(item.index)" />
       </div>
@@ -50,6 +45,7 @@
 <style scoped lang="scss">
   .item {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
   }
 

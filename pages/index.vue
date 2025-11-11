@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import type { AIResume, Resume } from "~/types/resume";
+  import type { TemplateConfig } from "~/types/templates";
 
   const { uploadResume } = useOpenAi();
-  const { resume } = useResume();
+  const { resume, config } = useResume();
   const { processResume } = useResumeProcessing();
 
   const file = ref<File | null>(null);
@@ -13,8 +14,6 @@
     if (!file.value) return;
     loading.value = true;
     const payload = await uploadResume(file.value);
-    console.log("payload", payload);
-
     loading.value = false;
     if (payload.data.resume.error) {
       // ideally before it should be marked as non-resume file
@@ -23,6 +22,7 @@
     try {
       const modifiedPayload = await processResume(payload.data);
       resume.value = modifiedPayload!.resume as Resume;
+      config.value = modifiedPayload!.config as TemplateConfig;
       navigateTo("/resume");
     } catch (e) {
       console.error(e);

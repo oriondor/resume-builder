@@ -1,4 +1,5 @@
 import type { Resume } from "~/types/resume";
+import type { TemplateConfig } from "~/types/templates";
 
 export function useResume() {
   const resume = useSessionStorage<Resume>("resume", {
@@ -15,7 +16,10 @@ export function useResume() {
     interests: { title: "Interests", items: [] },
   });
 
+  const config = useSessionStorage<TemplateConfig>("config", {});
+
   return {
     resume,
+    config,
   };
 }
