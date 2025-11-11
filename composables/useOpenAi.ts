@@ -1,8 +1,18 @@
-import type { AIResume } from "~/types/resume";
+import type { AIResume, Resume } from "~/types/resume";
+import type { TemplateConfig } from "~/types/templates";
 
-export interface ExpectedResume {
+export interface ExpectedResume extends AIResume {
   error?: string;
-  data?: AIResume;
+}
+
+export interface ExpectedPayload {
+  resume: ExpectedResume;
+  config: TemplateConfig;
+}
+
+export interface ModifiedPayload {
+  resume: Resume | AIResume;
+  config: TemplateConfig;
 }
 
 export function useOpenAi() {
@@ -10,7 +20,7 @@ export function useOpenAi() {
     const form = new FormData();
     form.append("file", file); // name must match server route
 
-    return await $fetch<ExpectedResume>("/api/ai/resume", {
+    return await $fetch<{ data: ExpectedPayload }>("/api/ai/resume", {
       method: "POST",
       body: form,
     });

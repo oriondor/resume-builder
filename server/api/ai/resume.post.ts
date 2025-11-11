@@ -1,64 +1,6 @@
 import OpenAI, { toFile } from "openai";
-
-const resumeTemplate = `
-  {
-    "fullName": "",
-    "title": "",
-    "shortSentence"(optional): "",
-    "summary": "",
-    "contact": {
-      "email": "",
-      "phones": [],
-      "address": ""
-    },
-    "experience": [
-      {
-        "company": "",
-        "role": "",
-        "location": "",
-        "companyDescription": "",
-        "startDate": "",
-        "endDate": "",
-        "description": "",
-        "index": 0
-      }
-    ],
-    "education": [
-      {
-        "institution": "",
-        "degree": "",
-        "dateFinished": "",
-        "description": "",
-        "index": 0
-      }
-    ],
-    "skills": [],
-    "interests": [],
-    "personalProjects": [
-      {
-        "title": "",
-        "startDate": "",
-        "endDate": "",
-        "index": 0
-      }
-    ],
-    "languages": [
-      {
-        "name": "",
-        "level": "",
-        "index": 0
-      }
-    ],
-    "certifications": [
-      {
-        "title": "",
-        "startDate": "",
-        "endDate": "",
-        "index": 0
-      }
-    ]
-  }
-`;
+import { resumeTemplate } from "./resumeTemplate";
+import { configRules } from "./configRules";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -84,13 +26,38 @@ export default defineEventHandler(async (event) => {
   // 2) Ask the model, referencing the file as an input_file
   const prompt = `Determine if this is a resume. If not, reply exactly: {"error": "This file is not a resume"}.
         If it is, return valid JSON like this:
+
         ${resumeTemplate}
+
+        ---
+
+        and it also should generate a proper config
+
+        ${configRules}
+
+        ---
+
         If you think some categories are missing, or you see additional relevant information, add it in a logical way.
         Please, for dates, use ISO date format; also if you see 'present' - put null into a date value
+        
+        You can see the title key for every section. Ideally, it should correspond to the section name from old resume
+
+        ---
+        Output requirements:
+
+        - Return only valid, minified JSON (no Markdown, no code fences, no explanations).
+        - Do not wrap the JSON in quotes.
+        - Do not include escape characters such as "\\n" or "\\t".
+        - The top-level structure must be:
+          {
+            "resume": { ... },
+            "config": { ... }
+          }
+        - Do not return text before or after the JSON.
     `;
 
   const resp = await client.responses.create({
-    model: "gpt-5-nano",
+    model: "gpt-4.1-mini",
     input: [
       {
         role: "user",
@@ -100,13 +67,14 @@ export default defineEventHandler(async (event) => {
         ],
       },
     ],
-    // text: { format: "json" }, // ← replaces old response_format
+    text: { format: { type: "json_object" } },
   });
 
   // 3) Return JSON back to the client
   let data: unknown = resp.output_text;
   try {
     data = JSON.parse(resp.output_text ?? "{}");
+    console.log(data);
   } catch {}
   return { data, fileId: uploaded.id };
 });

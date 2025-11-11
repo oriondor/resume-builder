@@ -1,31 +1,36 @@
-export interface AIResume {
+export interface SectionItem<T> {
+  title: string;
+  items: T[];
+}
+
+export interface PersonalInformation {
   fullName: string;
   title: string;
   shortSentence?: string;
   summary: string;
   contact: ContactItem;
-  experience: ExperienceItem[];
-  education: EducationItem[];
-  skills: string[];
-  personalProjects: PersonalProjectsItem[];
-  languages: LanguageItem[];
-  certifications: CertificationItem[];
-  interests: string[];
+}
+
+export interface AIResume {
+  personalInformation: SectionItem<PersonalInformation>;
+  experience: SectionItem<ExperienceItem>;
+  education: SectionItem<EducationItem>;
+  skills: SectionItem<string>;
+  personalProjects: SectionItem<PersonalProjectsItem>;
+  languages: SectionItem<LanguageItem>;
+  certifications: SectionItem<CertificationItem>;
+  interests: SectionItem<string>;
 }
 
 export interface Resume {
-  fullName: string;
-  title: string;
-  shortSentence?: string;
-  summary: string;
-  contact: ContactItem;
-  experience: ExperienceItem[];
-  education: EducationItem[];
-  skills: SkillItem[];
-  personalProjects: PersonalProjectsItem[];
-  languages: LanguageItem[];
-  certifications: CertificationItem[];
-  interests: InterestItem[];
+  personalInformation: SectionItem<PersonalInformation>;
+  experience: SectionItem<ExperienceItem>;
+  education: SectionItem<EducationItem>;
+  skills: SectionItem<SkillItem>;
+  personalProjects: SectionItem<PersonalProjectsItem>;
+  languages: SectionItem<LanguageItem>;
+  certifications: SectionItem<CertificationItem>;
+  interests: SectionItem<InterestItem>;
 }
 
 export interface ExperienceItem {

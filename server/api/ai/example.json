@@ -1,93 +1,591 @@
 {
-  "fullName": "Vladislav Pikalov",
-  "title": "Full-Stack Web Developer",
-  "shortSentence": "Turning complex business flows into clean, fast web apps",
-  "summary": "Full-stack developer (frontend-leaning) passionate about delivering intuitive, component-driven web applications. I work deep at the component and architecture level, take end-to-end ownership, and take pride in the quality of what I ship. Currently building a tender/procurement platform at Altura B.V. with Nuxt 4, Vue 3, and TypeScript; previous work spans ERP/CRM and B2B SaaS with Django, Laravel, Docker, and data-driven features. Comfortable with WebSockets, Elasticsearch, and PostgreSQL, and experienced in turning complex business flows into clear, fast user experiences.",
-  "contact": {
-    "email": "vladislav.pikalov@gmail.com",
-    "phones": ["+31613461443", "+380503472320"],
-    "address": "Roosendaal, Netherlands"
+  "resume": {
+    "personalInformation": {
+      "fullName": "Vladyslav Pikalov",
+      "title": "Full-Stack / Frontend Web Developer",
+      "shortSentence": "Analytical problem-solver who quickly turns complex issues into practical solutions.",
+      "summary": "Balances a sharp eye for detail with a clear big-picture view and communicates plainly. Dependable teammate who can step up to lead when needed. Looking for a dynamic team where I can build meaningful products and keep growing.",
+      "contact": {
+        "email": "vladislav.pikalov@gmail.com",
+        "phones": ["+31 6 1346 1443", "+380 50 347 2320"],
+        "address": "Roosendaal, Netherlands"
+      }
+    },
+    "experience": {
+      "title": "Experience",
+      "items": [
+        {
+          "company": "Altura B.V.",
+          "role": "Frontend Developer (Vue 3 / Nuxt)",
+          "location": "Amsterdam",
+          "companyDescription": "",
+          "period": {
+            "startDate": "2024-01-01",
+            "endDate": "2025-10-31"
+          },
+          "description": "Own end-to-end delivery of a large-scale tender-management platform — from discovery and technical architecture to implementation, testing, and release. Build scalable, accessible UIs with Vue 3, Nuxt, and TypeScript, ensuring responsiveness and performance across browsers. Implement complex data grid features (sorting, filtering, drag-and-drop, custom tooltips) handling thousands of records efficiently. Collaborate with backend engineers to define clean APIs and integrate real-time WebSocket updates for live tender activity. Introduced a reusable component library (buttons, modals, tables, form inputs), improving consistency and cutting development time. Work with product and design teams to refine user workflows, balancing technical feasibility with UX quality.",
+          "achievements": [],
+          "tools": ["Vue 3", "Nuxt", "TypeScript", "WebSocket"],
+          "index": 0
+        },
+        {
+          "company": "Copenhagen Technical Diving Courses ApS",
+          "role": "Full-Stack Developer (Vue 3 / Laravel)",
+          "location": "Copenhagen",
+          "companyDescription": "",
+          "period": {
+            "startDate": "2023-09-01",
+            "endDate": null
+          },
+          "description": "Build and maintain a CRM/ERP for a travel B2B platform (diving, yoga, accommodations). Own mission-critical flows: bookings, invoices, payments — delivering robust, accessible UIs with Vue 3 and data-heavy screens tuned for speed and clarity. Drive UX consistency with a Tailwind-based design system and add telemetry for actionable insights. Shape clean Laravel APIs and authorization policies that keep the frontend fast, reliable, and secure.",
+          "achievements": [],
+          "tools": ["Vue 3", "Laravel", "Tailwind"],
+          "index": 1
+        },
+        {
+          "company": "SEDNA Software",
+          "role": "Full-Stack Developer (Vue 2 / Django)",
+          "location": "Kyiv / Roosendaal",
+          "companyDescription": "",
+          "period": {
+            "startDate": "2021-02-01",
+            "endDate": "2023-12-31"
+          },
+          "description": "Built features end-to-end for an ERP/CRM for oil asset management and NDT, using Django (REST/ORM) and Vue 2. Prototyped time-series AI (forecasting / anomaly detection) and integrated useful models into product workflows.",
+          "achievements": [],
+          "tools": ["Vue 2", "Django", "REST", "ORM", "AI", "Time-series"],
+          "index": 2
+        },
+        {
+          "company": "Artificial Intelligence Institute of Ukraine",
+          "role": "Junior Researcher, Computer Vision (Python / C++)",
+          "location": "Kyiv",
+          "companyDescription": "",
+          "period": {
+            "startDate": "2019-04-01",
+            "endDate": "2021-02-28"
+          },
+          "description": "Contributed to UAV navigation prototypes, implementing and benchmarking OpenCV-based modules in Python and C++. Supported dataset preparation, experiments, and documentation; represented the institute at outreach and promotional events.",
+          "achievements": [],
+          "tools": ["Python", "C++", "OpenCV"],
+          "index": 3
+        }
+      ]
+    },
+    "education": {
+      "title": "Education",
+      "items": [
+        {
+          "institution": "WSB University, Dąbrowa Górnicza",
+          "degree": "M.Sc.",
+          "field": "Computer Science (Data Science track)",
+          "period": {
+            "startDate": "2022-02-01",
+            "endDate": "2023-09-30"
+          },
+          "description": "Focus: Machine Learning, Time-Series Analysis, Applied AI. Diploma: Anomaly Detection on Cryptocurrency Data. Used ARIMA, Prophet, scikit-learn, PyTorch, NumPy, Pandas, and visualization tools like D3/ECharts. Built prototypes for image and voice recognition with OpenCV.",
+          "index": 0
+        },
+        {
+          "institution": "Taras Shevchenko National University of Kyiv",
+          "degree": "M.Sc.",
+          "field": "Computer Science (Web & Data)",
+          "period": {
+            "startDate": "2021-09-01",
+            "endDate": "2022-05-31"
+          },
+          "description": "Diploma: CRM system for talent discovery and job assistance. Built SPAs with Vue 3 / TypeScript and Node / Django backends (REST / GraphQL). Implemented real-time dashboards and streaming pipelines with WebSockets.",
+          "index": 1
+        },
+        {
+          "institution": "Kyiv Polytechnic Institute (NTUU “KPI”)",
+          "degree": "B.Sc.",
+          "field": "Software Engineering",
+          "period": {
+            "startDate": "2015-09-01",
+            "endDate": "2019-06-30"
+          },
+          "description": "Focus on algorithms, data structures, discrete math, and systems programming. Built C/C++ utilities, SQL-backed projects, and applied design patterns and testing principles.",
+          "index": 2
+        }
+      ]
+    },
+    "skills": {
+      "title": "Skills",
+      "items": [
+        "TypeScript",
+        "Vue 2",
+        "Vue 3",
+        "Nuxt",
+        "Pinia",
+        "React",
+        "Next.js",
+        "Django",
+        "Python",
+        "Node.js",
+        "PHP",
+        "Laravel",
+        "SQL (PostgreSQL/MySQL)",
+        "MongoDB",
+        "Redis",
+        "C/C++",
+        "Java",
+        "C#",
+        "NumPy",
+        "Pandas",
+        "scikit-learn",
+        "TensorFlow",
+        "OpenCV",
+        "Git",
+        "Unix"
+      ]
+    },
+    "softSkills": {
+      "title": "Soft Skills",
+      "items": [
+        "Calm, results-focused teammate who negotiates win-wins, stays composed under pressure, and enjoys solving tough problems with practical, non-standard ideas.",
+        "Experienced in both early-stage and structured environments — organized, reliable, and committed to delivering quality work."
+      ]
+    },
+    "interests": {
+      "title": "Interests",
+      "items": []
+    },
+    "personalProjects": {
+      "title": "Personal Projects",
+      "items": [
+        {
+          "title": "3D Card Game",
+          "description": "A real-time multiplayer game inspired by “Durak.” Built a 3D interactive environment for card gameplay and logic synchronization.",
+          "period": {
+            "startDate": "",
+            "endDate": ""
+          },
+          "technologies": ["Three.js", "FastAPI", "PostgreSQL"],
+          "link": "",
+          "index": 0
+        },
+        {
+          "title": "Resume Builder",
+          "description": "An AI-powered tool to create and enhance resumes with dynamic templates. Developed a full-stack app for interactive resume editing and export with real-time previews.",
+          "period": {
+            "startDate": "",
+            "endDate": ""
+          },
+          "technologies": ["Nuxt.js", "TypeScript"],
+          "link": "",
+          "index": 1
+        }
+      ]
+    },
+    "languages": {
+      "title": "Languages",
+      "items": [
+        {
+          "name": "English",
+          "level": "Fluent",
+          "index": 0
+        },
+        {
+          "name": "Russian / Ukrainian",
+          "level": "Native",
+          "index": 1
+        },
+        {
+          "name": "Dutch",
+          "level": "Een beetje",
+          "index": 2
+        }
+      ]
+    },
+    "certifications": {
+      "title": "Certifications",
+      "items": []
+    },
+    "achievements": {
+      "title": "Achievements",
+      "items": []
+    },
+    "references": {
+      "title": "References",
+      "items": []
+    }
   },
-  "experience": [
-    {
-      "company": "Altura B.V.",
-      "role": "Frontend Developer",
-      "location": "Amsterdam",
-      "startDate": "2024-01",
-      "endDate": null,
-      "description": "Building and maintaining a tender-management web app — Nuxt 3, Vue 3, TypeScript",
-      "index": 4,
-      "companyDescription": "B2B SaaS Procurement Startup"
+  "config": {
+    "personalInformation": {
+      "title": "Personal Information",
+      "width": "1",
+      "fields": {
+        "fullName": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Full Name",
+            "placeholder": "Vladyslav Pikalov"
+          },
+          "order": 0
+        },
+        "title": {
+          "component": "text",
+          "type": "subtitle",
+          "attrs": {
+            "label": "Title",
+            "placeholder": "Full-Stack / Frontend Web Developer"
+          },
+          "order": 1
+        },
+        "shortSentence": {
+          "component": "textarea",
+          "attrs": {
+            "label": "Short Sentence",
+            "placeholder": "Write a short description..."
+          },
+          "order": 2
+        },
+        "summary": {
+          "component": "textarea",
+          "attrs": {
+            "label": "Summary",
+            "placeholder": "Write a short description..."
+          },
+          "order": 3
+        },
+        "email": {
+          "component": "text",
+          "attrs": {
+            "label": "Email",
+            "placeholder": "vladislav.pikalov@gmail.com"
+          },
+          "order": 4
+        },
+        "phones": {
+          "component": "text",
+          "attrs": {
+            "label": "Phones",
+            "placeholder": "+31 6 1346 1443, +380 50 347 2320"
+          },
+          "order": 5
+        },
+        "address": {
+          "component": "text",
+          "attrs": {
+            "label": "Address",
+            "placeholder": "Roosendaal, Netherlands"
+          },
+          "order": 6
+        }
+      }
     },
-    {
-      "company": "Technical Diving Courses ApS",
-      "role": "FrontEnd web developer (part-time)",
-      "location": "Copenhagen, Denmark",
-      "companyDescription": "B2B SaaS solutions, B2C solutions, ERP/CRM systems",
-      "startDate": "2023-09-01",
-      "endDate": null,
-      "description": "Creating and maintaining CRM/ERP system for travel company; Building expertise in Laravel",
-      "index": 0
+    "experience": {
+      "title": "Experience",
+      "width": "1",
+      "fields": {
+        "company": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Company",
+            "placeholder": "Company name"
+          },
+          "order": 0
+        },
+        "role": {
+          "component": "text",
+          "type": "subtitle",
+          "attrs": {
+            "label": "Role",
+            "placeholder": "Frontend Developer"
+          },
+          "order": 1
+        },
+        "location": {
+          "component": "text",
+          "type": "italics",
+          "attrs": {
+            "label": "Location",
+            "placeholder": "Amsterdam"
+          },
+          "order": 2
+        },
+        "period": {
+          "component": "date-range",
+          "attrs": {
+            "label": "Period",
+            "placeholder": "Select start and end dates"
+          },
+          "order": 3
+        },
+        "description": {
+          "component": "textarea",
+          "type": "subtitle",
+          "attrs": {
+            "label": "Description",
+            "placeholder": "Describe your responsibilities..."
+          },
+          "order": 4
+        },
+        "achievements": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Achievements",
+            "placeholder": "Add or select achievements"
+          },
+          "order": 5
+        },
+        "tools": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Tools",
+            "placeholder": "Add or select tools"
+          },
+          "order": 6
+        }
+      }
     },
-    {
-      "company": "SEDNA Software",
-      "role": "Full-stack web developer",
-      "location": "Roosendaal, Netherlands",
-      "companyDescription": "B2B SaaS solutions, B2C solutions, ERP/CRM systems",
-      "startDate": "2021-02-01",
-      "endDate": "2023-12",
-      "description": "ERP and CRM systems development (oil management/non-destructive testing). Research and implemetation of reinforcement prediction technics on time- series data",
-      "index": 1
+    "education": {
+      "title": "Education",
+      "width": "1",
+      "fields": {
+        "institution": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Institution",
+            "placeholder": "University name"
+          },
+          "order": 0
+        },
+        "degree": {
+          "component": "text",
+          "type": "subtitle",
+          "attrs": {
+            "label": "Degree",
+            "placeholder": "M.Sc."
+          },
+          "order": 1
+        },
+        "field": {
+          "component": "text",
+          "type": "italics",
+          "attrs": {
+            "label": "Field",
+            "placeholder": "Computer Science"
+          },
+          "order": 2
+        },
+        "period": {
+          "component": "date-range",
+          "attrs": {
+            "label": "Period",
+            "placeholder": "Select start and end dates"
+          },
+          "order": 3
+        },
+        "description": {
+          "component": "textarea",
+          "attrs": {
+            "label": "Description",
+            "placeholder": "Write a short description..."
+          },
+          "order": 4
+        }
+      }
     },
-    {
-      "company": "Artificial Intelligence Institute",
-      "role": "Junior Researcher Computer Vision",
-      "location": "Kyiv, Ukraine",
-      "companyDescription": "",
-      "startDate": "2019-04-01",
-      "endDate": "2021-02-01",
-      "description": "Participation in institute promotion events; Participating in UAV navigation system development; OpenCV on both Python and C++ languages",
-      "index": 2
-    }
-  ],
-  "education": [
-    {
-      "institution": "WSB Academy",
-      "degree": "Master of Science",
-      "dateFinished": "2023-09-01",
-      "description": "Computer Science/Data Science; Machine learning methods for anomaly detection on cryptocurrency data; Image and voice recognition",
-      "index": 0,
-      "location": "Poland"
-    }
-  ],
-  "skills": [],
-  "interests": [],
-  "personalProjects": [
-    { "title": "Resume builder", "startDate": "2025-08-18", "endDate": null, "index": 2 },
-    {
-      "title": "Interactive card game with web interface",
-      "startDate": "2024-10-01",
-      "endDate": null,
-      "index": 0
+    "skills": {
+      "title": "Skills",
+      "width": "1/2",
+      "fields": {
+        "skills": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Skills",
+            "placeholder": "Add or select skills"
+          },
+          "order": 0
+        }
+      }
     },
-    {
-      "title": "Water Delivery Bot & CRM",
-      "startDate": "2018-07-01",
-      "endDate": "2018-10-01",
-      "index": 1
+    "softSkills": {
+      "title": "Soft Skills",
+      "width": "1/2",
+      "fields": {
+        "softSkills": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Soft Skills",
+            "placeholder": "Add or select soft skills"
+          },
+          "order": 0
+        }
+      }
+    },
+    "interests": {
+      "title": "Interests",
+      "width": "1/2",
+      "fields": {
+        "interests": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Interests",
+            "placeholder": "Add or select interests"
+          },
+          "order": 0
+        }
+      }
+    },
+    "personalProjects": {
+      "title": "Personal Projects",
+      "width": "1/3",
+      "fields": {
+        "title": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Title",
+            "placeholder": "Project title"
+          },
+          "order": 0
+        },
+        "description": {
+          "component": "textarea",
+          "attrs": {
+            "label": "Description",
+            "placeholder": "Write a short description..."
+          },
+          "order": 1
+        },
+        "period": {
+          "component": "date-range",
+          "attrs": {
+            "label": "Period",
+            "placeholder": "Select start and end dates"
+          },
+          "order": 2
+        },
+        "technologies": {
+          "component": "multiselect",
+          "attrs": {
+            "label": "Technologies",
+            "placeholder": "Add or select technologies"
+          },
+          "order": 3
+        },
+        "link": {
+          "component": "text",
+          "attrs": {
+            "label": "Link",
+            "placeholder": "https://..."
+          },
+          "order": 4
+        }
+      }
+    },
+    "languages": {
+      "title": "Languages",
+      "width": "1/2",
+      "fields": {
+        "name": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Language",
+            "placeholder": "English"
+          },
+          "order": 0
+        },
+        "level": {
+          "component": "text",
+          "type": "italics",
+          "attrs": {
+            "label": "Level",
+            "placeholder": "Fluent"
+          },
+          "order": 1
+        }
+      }
+    },
+    "certifications": {
+      "title": "Certifications",
+      "width": "1/3",
+      "fields": {
+        "title": {
+          "component": "text",
+          "type": "title",
+          "attrs": {
+            "label": "Title",
+            "placeholder": "Certification title"
+          },
+          "order": 0
+        },
+        "issuer": {
+          "component": "text",
+          "attrs": {
+            "label": "Issuer",
+            "placeholder": "Issuer name"
+          },
+          "order": 1
+        },
+        "period": {
+          "component": "date-range",
+          "attrs": {
+            "label": "Period",
+            "placeholder": "Select start and end dates"
+          },
+          "order": 2
+        }
+      }
+    },
+    "achievements": {
+      "title": "Achievements",
+      "width": "1/3",
+      "fields": {
+        "title": {
+          "component": "text",
+          "attrs": {
+            "label": "Title",
+            "placeholder": "Achievement title"
+          },
+          "order": 0
+        },
+        "description": {
+          "component": "textarea",
+          "attrs": {
+            "label": "Description",
+            "placeholder": "Write a short description..."
+          },
+          "order": 1
+        }
+      }
+    },
+    "references": {
+      "title": "References",
+      "width": "1/3",
+      "fields": {
+        "name": {
+          "component": "text",
+          "attrs": {
+            "label": "Name",
+            "placeholder": "Reference name"
+          },
+          "order": 0
+        },
+        "role": {
+          "component": "text",
+          "attrs": {
+            "label": "Role",
+            "placeholder": "Reference role"
+          },
+          "order": 1
+        },
+        "contact": {
+          "component": "text",
+          "attrs": {
+            "label": "Contact",
+            "placeholder": "Reference contact info"
+          },
+          "order": 2
+        }
+      }
     }
-  ],
-  "languages": [
-    { "name": "English", "level": "Full Professional Proficiency", "index": 0 },
-    { "name": "Ukrainian", "level": "Native or Bilingual Proficiency", "index": 1 },
-    { "name": "Russian", "level": "Native or Bilingual Proficiency", "index": 2 }
-  ],
-  "certifications": [
-    {
-      "title": "AWS Academy Cloud Foundations",
-      "startDate": "2022-05-01",
-      "endDate": "2022-07-01",
-      "index": 0
-    }
-  ]
+  }
 }

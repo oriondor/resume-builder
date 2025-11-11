@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  interface Props {
+  export interface TextProps {
     type?: "text" | "title" | "subtitle" | "italics";
     size?: "small" | "medium" | "large" | "extra-large";
     uppercase?: boolean;
     icon?: string | null;
   }
-  withDefaults(defineProps<Props>(), {
+  withDefaults(defineProps<TextProps>(), {
     type: "text",
     size: "medium",
     uppercase: false,

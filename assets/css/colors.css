@@ -38,7 +38,7 @@
   --color-accent-soft: color-mix(in srgb, var(--color-accent) 12%, #0e1116);
   --color-accent-border: color-mix(in srgb, var(--color-accent) 40%, #0e1116);
 
-  --color-accent-hover: color-mix(in srgb, var(--color-accent) 90%, white 15%);
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 30%, white 70%);
   --color-accent-active: color-mix(in srgb, var(--color-accent) 80%, white 25%);
 }
 

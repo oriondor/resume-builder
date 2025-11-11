@@ -1,4 +1,4 @@
-import type { Tag } from "~/types/tags";
+import type { Tag, TagStyle } from "~/types/tags";
 
 export function useTags(identifier: string) {
   const key = computed(() => `tags:${unref(identifier)}`);
@@ -27,5 +27,7 @@ export function useTags(identifier: string) {
     return await $fetch(`/api/tags/${id}`, { method: "DELETE" });
   }
 
-  return { tags, refresh, createTag, renameTag, removeTag };
+  const tagStyles: TagStyle[] = ["neutral", "accent"];
+
+  return { tags, refresh, createTag, renameTag, removeTag, tagStyles };
 }

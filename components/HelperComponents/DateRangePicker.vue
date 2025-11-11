@@ -1,25 +1,27 @@
 <script setup lang="ts">
+  import type { ResumeDate } from "./View/Dates.vue";
+
   interface Props {
     month?: boolean;
   }
   defineProps<Props>();
 
-  const dates = defineModel<[string, string | null]>("dates", { required: true });
+  const dates = defineModel<ResumeDate>("dates", { required: true });
 
   const present = ref(false);
 
   watch(present, (value) => {
     if (value) {
-      dates.value[1] = null; // Set end date to null when present is checked
+      dates.value.endDate = null; // Set end date to null when present is checked
     } else {
-      dates.value[1] = ""; // Reset end date when present is unchecked
+      dates.value.endDate = ""; // Reset end date when present is unchecked
     }
   });
 
   const dateIsCorrect = computed(() => {
     // Ensure that the start date is before the end date
-    if (dates.value[0] && dates.value[1]) {
-      return new Date(dates.value[0]) <= new Date(dates.value[1]);
+    if (dates.value.startDate && dates.value.endDate) {
+      return new Date(dates.value.startDate) <= new Date(dates.value.endDate);
     }
     return true; // If one of the dates is empty, consider it correct
   });
@@ -27,11 +29,13 @@
   defineExpose({ dateIsCorrect });
 </script>
 <template>
-  <div class="date-range-picker">
-    <helper-date-picker v-model:date="dates[0]" :month />
-    <helper-date-picker v-model:date="dates[1]" :month />
-    <helper-check-box v-model="present"> Present </helper-check-box>
-  </div>
+  <helper-control-element>
+    <div class="date-range-picker">
+      <helper-date-picker v-model:date="dates.startDate" :month />
+      <helper-date-picker v-model:date="dates.endDate" :month />
+      <helper-check-box v-model="present"> Present </helper-check-box>
+    </div>
+  </helper-control-element>
   <div v-if="!dateIsCorrect" class="error-message">
     <p>Start date must be before end date.</p>
   </div>
@@ -41,8 +45,13 @@
   .date-range-picker {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
-    .date-picker:not(:first-child) {
+    & > * {
+      min-width: 0;
+    }
+
+    .date-picker {
       margin-inline: 0;
     }
     .date-picker:first-child {

@@ -1,9 +1,13 @@
 <script setup lang="ts">
+  import type { ResumeDate } from "~/components/HelperComponents/View/Dates.vue";
   import type { SkillItem } from "~/types/resume";
 
   const text = ref("");
   const singleDate = ref("");
-  const dateRange = ref<["", ""]>(["", ""]);
+  const dateRange = ref<ResumeDate>({
+    startDate: "",
+    endDate: "",
+  });
   const checkboxValue = ref(false);
 
   const selectedOptions = ref<SkillItem[]>([]);
@@ -43,7 +47,7 @@
     <view-dates :dates="{ start: singleDate }" />
     <helper-date-range-picker v-model:dates="dateRange" month />
     <view-separator />
-    <view-dates :dates="{ start: dateRange[0], end: dateRange[1] }" month />
+    <view-dates :dates="dateRange" month />
     <view-separator />
     <view-separator />
     <helper-check-box v-model="checkboxValue"> Checkbox text </helper-check-box>
@@ -57,6 +61,13 @@
       @tag="createNewSkill"
     />
     <helper-selector v-model="selectedOption" :options field="id" option-name="name" />
+    <view-separator />
+    <div class="flex fancy-check-boxes">
+      <helper-check-box checked-icon="noto:goose" />
+      <helper-check-box checked-icon="icon-park-outline:elephant" />
+      <helper-check-box unchecked-icon="pepicons-pencil:seedling-circle-filled" />
+      <helper-check-box unchecked-icon="lucide-lab:elephant" checked-icon="mdi:elephant" />
+    </div>
   </div>
 </template>
 

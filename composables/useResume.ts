@@ -1,29 +1,25 @@
 import type { Resume } from "~/types/resume";
+import type { TemplateConfig } from "~/types/templates";
 
 export function useResume() {
   const resume = useSessionStorage<Resume>("resume", {
-    fullName: "",
-    title: "",
-    shortSentence: "",
-    contact: { email: "", phones: [], address: "" },
-    summary: "",
-    experience: [],
-    education: [],
-    personalProjects: [],
-    languages: [],
-    skills: [],
-    certifications: [],
-    interests: [],
+    personalInformation: {
+      title: "Persona information",
+      items: [],
+    },
+    experience: { title: "Experience", items: [] },
+    education: { title: "Education", items: [] },
+    personalProjects: { title: "Projects", items: [] },
+    languages: { title: "Languages", items: [] },
+    skills: { title: "Skills", items: [] },
+    certifications: { title: "Certifications", items: [] },
+    interests: { title: "Interests", items: [] },
   });
 
-  function removeItem(object: any[], index: number) {
-    const objectIndex = object.findIndex((item) => item.index === index);
-    object.splice(objectIndex, 1);
-    object.forEach((item, index) => ({ ...item, index }));
-  }
+  const config = useSessionStorage<TemplateConfig>("config", {});
 
   return {
     resume,
-    removeItem,
+    config,
   };
 }

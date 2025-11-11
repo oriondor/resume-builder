@@ -15,8 +15,14 @@ export default defineNuxtConfig({
     { path: "~/components/HelperComponents/View", pathPrefix: true, prefix: "view" },
     { path: "~/components/PlatformComponents", pathPrefix: false },
     {
-      path: "~/components/PlatformComponents/Resume/SideBar/Sections",
-      prefix: "sections",
+      path: "~/components/PlatformComponents/Resume/SideBar",
+      pathPrefix: true,
+      prefix: "side-bar",
+    },
+    {
+      path: "~/components/PlatformComponents/Resume/Preview/Sections",
+      pathPrefix: true,
+      prefix: "print-sections",
     },
   ],
   css: [
