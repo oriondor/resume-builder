@@ -14,15 +14,14 @@
 
   const collapsed = ref(true);
 
-  function isTagItem(item: unknown): item is { id: string; name: string; identifier: string } {
-    return (
-      typeof item === "object" &&
-      item !== null &&
-      "id" in item &&
-      "name" in item &&
-      "identifier" in item
-    );
+  function isTagItem(config: SectionConfig) {
+    return Object.values(config.fields)[0]?.component === "multiselect";
   }
+
+  const firstFieldPayload = computed(() => {
+    const [name, fieldConfig] = Object.entries(config.value?.fields ?? {})[0] ?? [];
+    return name ? { name, fieldConfig } : null;
+  });
 </script>
 
 <template>
@@ -40,21 +39,21 @@
       />
     </div>
     <Transition name="animate-fade-slide" mode="out-in">
-      <template v-if="isTagItem(content.items[0])">
-        <side-bar-field
-          v-model="content.items"
-          :collapsed
-          :field-config="Object.values(config.fields)[0]"
-        />
+      <template v-if="isTagItem(config)">
+        <side-bar-field v-model="content.items" :collapsed v-bind="firstFieldPayload" />
       </template>
       <template v-else>
-        <side-bar-items v-model:options="content.items" v-slot="{ collapsed, item, index }">
+        <side-bar-items
+          v-model:options="content.items"
+          v-slot="{ collapsed: itemCollapsed, item, index }"
+          :section-collapsed="collapsed"
+        >
           <div>
             <side-bar-field
               v-for="[name, _] in Object.entries(item)"
               :key="name"
               v-model="content.items[index][name]"
-              :collapsed
+              :collapsed="itemCollapsed"
               :field-config="config.fields[name]"
             />
           </div>

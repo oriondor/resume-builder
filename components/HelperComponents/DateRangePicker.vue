@@ -8,7 +8,7 @@
 
   const dates = defineModel<ResumeDate>("dates", { required: true });
 
-  const present = ref(false);
+  const present = ref(dates.value.endDate !== "" && !dates.value.endDate);
 
   watch(present, (value) => {
     if (value) {

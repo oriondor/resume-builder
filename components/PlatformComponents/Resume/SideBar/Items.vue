@@ -1,4 +1,9 @@
 <script setup lang="ts">
+  interface Props {
+    sectionCollapsed: Boolean;
+  }
+  defineProps<Props>();
+
   const options = defineModel<any[]>("options", { default: [] });
 
   const emit = defineEmits<{
@@ -21,21 +26,36 @@
     options.value.splice(objectIndex, 1);
     options.value.forEach((item, index) => ({ ...item, index }));
   }
+
+  function firstFieldContent(item: any) {
+    return Object.values(item)[0] || "";
+  }
 </script>
 
 <template>
   <div class="items">
     <template v-for="(item, index) in options" :key="item.index">
-      <div class="item">
+      <div v-if="!sectionCollapsed" class="item">
         <Icon
           :name="expandedIndex === index ? 'line-md:chevron-up' : 'line-md:chevron-down'"
           class="icon"
           @click="expand(index)"
         />
-        <Transition name="animate-fade-slide" mode="out-in">
-          <slot :collapsed="expandedIndex !== index" :item :index />
-        </Transition>
-        <Icon name="material-symbols:delete-rounded" class="icon" @click="removeItem(item.index)" />
+        <div>
+          <Transition name="animate-fade-slide" mode="out-in">
+            <slot :collapsed="expandedIndex !== index" :item :index />
+          </Transition>
+          <helper-button
+            v-if="expandedIndex === index"
+            icon="material-symbols:delete-rounded"
+            @click="removeItem(item.index)"
+          >
+            Remove item
+          </helper-button>
+        </div>
+      </div>
+      <div v-else>
+        <view-text>{{ firstFieldContent(item) }}</view-text>
       </div>
       <view-separator margin="0.5" />
     </template>
@@ -45,8 +65,11 @@
 <style scoped lang="scss">
   .item {
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
+
+    > div {
+      flex-direction: column;
+    }
   }
 
   .icon {
