@@ -35,28 +35,28 @@
 <template>
   <div class="items">
     <template v-for="(item, index) in options" :key="item.index">
-      <div v-if="!sectionCollapsed" class="item">
-        <Icon
-          :name="expandedIndex === index ? 'line-md:chevron-up' : 'line-md:chevron-down'"
-          class="icon"
-          @click="expand(index)"
-        />
-        <div>
-          <Transition name="animate-fade-slide" mode="out-in">
+      <transition name="animate-fade" mode="out-in">
+        <div v-if="!sectionCollapsed" class="item" @dblclick="expand(index)">
+          <Icon
+            :name="expandedIndex === index ? 'line-md:chevron-up' : 'line-md:chevron-down'"
+            class="icon"
+            @click="expand(index)"
+          />
+          <div>
             <slot :collapsed="expandedIndex !== index" :item :index />
-          </Transition>
-          <helper-button
-            v-if="expandedIndex === index"
-            icon="material-symbols:delete-rounded"
-            @click="removeItem(item.index)"
-          >
-            Remove item
-          </helper-button>
+            <helper-button
+              v-if="expandedIndex === index"
+              icon="material-symbols:delete-rounded"
+              @click="removeItem(item.index)"
+            >
+              Remove item
+            </helper-button>
+          </div>
         </div>
-      </div>
-      <div v-else>
-        <view-text>{{ firstFieldContent(item) }}</view-text>
-      </div>
+        <div v-else>
+          <view-text>{{ firstFieldContent(item) }}</view-text>
+        </div>
+      </transition>
       <view-separator margin="0.5" />
     </template>
   </div>

@@ -7,7 +7,9 @@
 
   const sectionNames = computed(
     () =>
-      Object.keys(config.value).filter((name) => name !== "personalInformation") as (keyof Resume)[]
+      Object.keys(config.value).filter(
+        (name) => name !== "personalInformation" && config.value[name]
+      ) as (keyof Resume)[]
   );
 </script>
 
@@ -18,16 +20,15 @@
         <select-theme />
         <select-mode />
       </div>
-      <template v-for="sectionName in sectionNames">
+      <transition-group name="animate-fade-slide" appear>
         <side-bar-section
-          v-if="config[sectionName]"
+          v-for="(sectionName, index) in sectionNames"
+          :key="sectionName"
           :title="resume[sectionName].title"
           v-model:content="resume[sectionName]"
           v-model:config="config[sectionName]"
-          :key="sectionName"
-        >
-        </side-bar-section>
-      </template>
+        />
+      </transition-group>
     </div>
   </client-only>
 </template>
@@ -51,20 +52,7 @@
     scrollbar-gutter: stable both-edges; /* avoid layout shift when bar appears */
   }
 
-  /* right column root container (whatever wraps the pages) */
-  .preview-root {
-    height: 100%;
-    overflow: auto;
-    overscroll-behavior: contain;
-    overflow-anchor: none;
-    scrollbar-gutter: stable both-edges;
-  }
-
   .mode-selector {
     display: flex;
-  }
-
-  .title-item {
-    margin-block: 1rem;
   }
 </style>

@@ -5,9 +5,11 @@
     </div>
 
     <Teleport to="body">
-      <div v-if="showPopover" ref="popover" class="popover" :style="popoverStyle">
-        <slot name="content" :toggle="togglePopover" />
-      </div>
+      <Transition name="animate-fade-slide" appear>
+        <div v-if="showPopover" ref="popover" class="popover" :style="popoverStyle">
+          <slot name="content" :toggle="togglePopover" />
+        </div>
+      </Transition>
     </Teleport>
   </div>
 </template>

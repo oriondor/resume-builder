@@ -25,7 +25,7 @@
 </script>
 
 <template>
-  <div class="section">
+  <div class="section" @dblclick="collapsed = false">
     <div class="section-header">
       <view-text type="title" class="header-title">
         <slot name="title">
@@ -38,28 +38,27 @@
         @click="collapsed = !collapsed"
       />
     </div>
-    <Transition name="animate-fade-slide" mode="out-in">
-      <template v-if="isTagItem(config)">
-        <side-bar-field v-model="content.items" :collapsed v-bind="firstFieldPayload" />
-      </template>
-      <template v-else>
-        <side-bar-items
-          v-model:options="content.items"
-          v-slot="{ collapsed: itemCollapsed, item, index }"
-          :section-collapsed="collapsed"
-        >
-          <div>
-            <side-bar-field
-              v-for="[name, _] in Object.entries(item)"
-              :key="name"
-              v-model="content.items[index][name]"
-              :collapsed="itemCollapsed"
-              :field-config="config.fields[name]"
-            />
-          </div>
-        </side-bar-items>
-      </template>
-    </Transition>
+    <template v-if="isTagItem(config)">
+      <side-bar-field v-model="content.items" :collapsed v-bind="firstFieldPayload" />
+    </template>
+    <template v-else>
+      <side-bar-items
+        v-model:options="content.items"
+        v-slot="{ collapsed: itemCollapsed, item, index }"
+        :section-collapsed="collapsed"
+      >
+        <transition-group name="animate-fade-slide" appear mode="out-in">
+          <side-bar-field
+            v-for="[name, _] in Object.entries(item)"
+            :key="name"
+            :name
+            v-model="content.items[index][name]"
+            :collapsed="itemCollapsed"
+            :field-config="config.fields[name]"
+          />
+        </transition-group>
+      </side-bar-items>
+    </template>
 
     <div class="section-footer">
       <slot name="footer" />
@@ -72,6 +71,7 @@
     padding: 1rem;
     background-color: var(--color-surface);
     border-radius: 4px;
+    user-select: none;
 
     .section-header {
       display: flex;
