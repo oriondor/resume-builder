@@ -3,19 +3,17 @@
   import type { CustomSectionFieldConfig } from "~/types/templates";
 
   const props = defineProps<{
-    collapsed: boolean;
     fieldConfig: CustomSectionFieldConfig;
     name?: string;
   }>();
 
   const modelValue = defineModel();
-  const { collapsed, fieldConfig } = toRefs(props);
+  const { fieldConfig } = toRefs(props);
 
   const { componentTag } = useFetchFields(fieldConfig);
 
   const fieldPayload = computed(() => ({
-    collapsed: collapsed.value,
-    ...fieldConfig.value.attrs,
+    type: fieldConfig.value.type,
   }));
 </script>
 
@@ -26,5 +24,6 @@
     v-model="modelValue"
     v-bind="fieldPayload"
     :name
+    :collapsed="true"
   />
 </template>

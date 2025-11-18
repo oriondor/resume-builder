@@ -20,9 +20,9 @@ export default defineNuxtConfig({
       prefix: "side-bar",
     },
     {
-      path: "~/components/PlatformComponents/Resume/Preview/Sections",
+      path: "~/components/PlatformComponents/Resume/Preview",
       pathPrefix: true,
-      prefix: "print-sections",
+      prefix: "preview",
     },
   ],
   css: [

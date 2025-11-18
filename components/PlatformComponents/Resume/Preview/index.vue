@@ -1,48 +1,26 @@
 <script setup lang="ts">
   import type { Resume } from "~/types/resume";
-  import { pascalCase } from "change-case";
-  import type { Template } from "~/types/templates";
+  import type { Template, TemplateConfig } from "~/types/templates";
 
   const templates = ref<Template[]>([]);
 
   const resume = defineModel<Resume>("resume", { required: true });
+  const config = defineModel<TemplateConfig>("config", { required: true });
 
-  const sectionModules = import.meta.glob<() => Promise<{ default: Component }>>(
-    "~/components/PlatformComponents/Resume/Preview/Sections/*.vue"
-  );
-  // Load sections from resume and return components related to every section
-  // every section that needs a component will have it
-  const availableComponents = computed(() =>
-    Object.keys(resume.value)
-      .map((sectionName) => {
-        const fileName = pascalCase(sectionName);
-        const path = `/components/PlatformComponents/Resume/Preview/Sections/${fileName}.vue`;
-
-        // TODO: for sections without corresponding component there should be slightly different approach
-        // it will load custom component, but there will be also white list introduced, for personal info and etc.
-        if (!sectionModules[path]) return null;
-
-        return {
-          name: sectionName,
-          component: defineAsyncComponent(sectionModules[path]),
-        };
-      })
-      .filter((componentDefinition) => componentDefinition !== null)
-  );
+  const { sectionNames } = useFetchSections(config);
 </script>
 
 <template>
   <div class="container">
     <div class="page">
       <div class="content">
-        <paginable-block>
-          <print-sections-personal-info :resume />
-        </paginable-block>
-        <paginable-block v-for="entry in availableComponents" :key="entry.name">
-          <print-sections-master v-slot="{ item }" :title="entry.name" :items="resume[entry.name]">
-            <component :is="entry.component" :item />
-          </print-sections-master>
-        </paginable-block>
+        <preview-section
+          v-for="(sectionName, index) in sectionNames"
+          :key="sectionName"
+          :title="resume[sectionName].title"
+          v-model:content="resume[sectionName]"
+          v-model:config="config[sectionName]"
+        />
       </div>
     </div>
   </div>

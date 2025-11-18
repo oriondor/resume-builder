@@ -5,6 +5,17 @@
     width?: BlockWidth;
   }
 
+  export interface PaginableBlockExposeProps {
+    el: Ref<HTMLElement | null>;
+    children: ComputedRef<
+      {
+        child: Element;
+        rect: DOMRect;
+      }[]
+    >;
+    height: ComputedRef<number>;
+  }
+
   const props = withDefaults(defineProps<Props>(), {
     width: "1",
   });
@@ -47,12 +58,11 @@
     }, 0)
   );
 
-  defineExpose({ el, children, height });
+  defineExpose<PaginableBlockExposeProps>({ el, children, height });
 </script>
 
 <template>
-  <div class="paginable-block" ref="el">
-    {{ height }}
+  <div class="paginable-block" ref="el" v-bind="$attrs">
     <slot />
   </div>
 </template>
