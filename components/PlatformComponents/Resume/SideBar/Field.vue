@@ -18,7 +18,7 @@
   }));
 
   const components = import.meta.glob(
-    "~/components/PlatformComponents/Resume/SideBar/Fields/*.vue",
+    "~/components/PlatformComponents/Resume/Fields/*.vue",
     { eager: true } // load all at once
   );
 
