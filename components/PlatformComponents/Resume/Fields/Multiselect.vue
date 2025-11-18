@@ -25,6 +25,8 @@
     />
   </template>
   <template v-else>
-    <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
+    <div>
+      <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
+    </div>
   </template>
 </template>

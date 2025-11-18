@@ -5,12 +5,7 @@
   const resume = defineModel<Resume>("resume", { required: true });
   const config = defineModel<TemplateConfig>("config", { required: true });
 
-  const sectionNames = computed(
-    () =>
-      Object.keys(config.value).filter(
-        (name) => name !== "personalInformation" && config.value[name]
-      ) as (keyof Resume)[]
-  );
+  const { sectionNames } = useFetchSections(config);
 </script>
 
 <template>
