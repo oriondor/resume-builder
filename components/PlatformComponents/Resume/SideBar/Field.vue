@@ -16,6 +16,7 @@
   const fieldPayload = computed(() => ({
     collapsed: collapsed.value,
     ...fieldConfig.value.attrs,
+    lineClamp: 3,
   }));
 </script>
 

@@ -4,12 +4,12 @@
     (e: "input", value: string): void;
   }>();
 
-  const text = defineModel<string>({ default: "" });
+  const modelValue = defineModel<string>({ default: "" });
 </script>
 
 <template>
-  <helper-control-element>
-    <textarea v-bind="attrs" v-model="text" rows="4" class="textarea" />
+  <helper-control-element v-bind="attrs">
+    <textarea v-bind="attrs" v-model="modelValue" rows="4" class="textarea" />
   </helper-control-element>
 </template>
 

@@ -4,19 +4,23 @@
     size?: "small" | "medium" | "large" | "extra-large";
     uppercase?: boolean;
     icon?: string | null;
+    lineClamp?: number | string;
   }
-  withDefaults(defineProps<TextProps>(), {
+  const props = withDefaults(defineProps<TextProps>(), {
     type: "text",
     size: "medium",
     uppercase: false,
     icon: null,
+    lineClamp: undefined,
   });
   const attrs = useAttrs();
   const modelValue = defineModel<string>();
+
+  const clampLines = computed(() => Number(props.lineClamp));
 </script>
 
 <template>
-  <div :class="[type, size, { uppercase }]" v-bind="attrs">
+  <div :class="[type, size, { uppercase, clamp: !!lineClamp }]" v-bind="attrs">
     <Icon v-if="icon" :name="icon" />
     <slot>
       {{ modelValue }}
@@ -26,9 +30,18 @@
 
 <style lang="scss" scoped>
   div {
+    white-space: pre-wrap;
     display: flex;
     align-items: center;
     gap: 0.25rem;
+
+    &.clamp {
+      display: -webkit-box;
+      overflow: hidden;
+      line-clamp: v-bind(clampLines);
+      -webkit-line-clamp: v-bind(clampLines);
+      -webkit-box-orient: vertical;
+    }
 
     &.uppercase {
       text-transform: uppercase;
