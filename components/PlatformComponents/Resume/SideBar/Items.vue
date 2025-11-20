@@ -12,12 +12,15 @@
 
   const expandedIndex = ref<number | null>(null);
 
-  function expand(index: number) {
-    if (expandedIndex.value === index) {
-      expandedIndex.value = null;
+  function expand(index: number, force?: boolean) {
+    // No force - toggle behaviour
+    if (force === undefined) {
+      expandedIndex.value = expandedIndex.value === index ? null : index;
       return;
     }
-    expandedIndex.value = index;
+
+    // Forced expand or collapse
+    expandedIndex.value = force ? index : null;
   }
 
   function removeItem(index: number) {
@@ -36,7 +39,7 @@
   <div class="items">
     <template v-for="(item, index) in options" :key="item.index">
       <transition name="animate-fade" mode="out-in">
-        <div v-if="!sectionCollapsed" class="item" @dblclick="expand(index)">
+        <div v-if="!sectionCollapsed" class="item" @dblclick="expand(index, true)">
           <Icon
             :name="expandedIndex === index ? 'line-md:chevron-up' : 'line-md:chevron-down'"
             class="icon"
