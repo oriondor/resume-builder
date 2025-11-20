@@ -36,26 +36,69 @@ export function useResumeProcessing() {
     config,
   }: ModifiedPayload): Promise<ModifiedPayload | undefined> {
     const resumeData = { ...resume };
-    const tagCategories = getTagCategories(config);
+    const tagFields = getTagCategories(config); // e.g. ["skills", "tools", "technologies", ...]
 
-    for (const category of tagCategories) {
-      const { tags, refresh, createTag } = useTags(category);
+    for (const fieldName of tagFields) {
+      const { tags, refresh, createTag } = useTags(fieldName);
       await refresh();
-      const existingTagNames = tags.value.map(({ name }) => name);
+      const existingTagNames = tags.value.map((t) => t.name);
 
-      if (!resumeData[category]?.items?.length) continue;
+      // Iterate over each section of resume (experience, education, skills, ...)
+      for (const sectionKey of Object.keys(resumeData)) {
+        const section = resumeData[sectionKey];
+        if (!section?.items || !Array.isArray(section.items)) continue;
 
-      const uniqueTags = [...new Set(resumeData[category].items as string[])];
+        const items = section.items;
 
-      // Ensure all tags are in DB
-      resumeData[category].items = await Promise.all(
-        uniqueTags.map(async (tag) => {
-          const index = existingTagNames.findIndex((existingTag) => existingTag === tag);
-          return index === -1 ? await createTag(tag) : tags.value[index];
-        })
-      );
+        //
+        // --------------------------
+        // CASE A — items = string[]
+        // --------------------------
+        //
+        if (Array.isArray(items) && items.every((i) => typeof i === "string")) {
+          if (sectionKey === fieldName) {
+            const uniqueTags = [...new Set(items as string[])];
+
+            section.items = await Promise.all(
+              uniqueTags.map(async (tag) => {
+                const index = existingTagNames.indexOf(tag);
+                return index === -1 ? await createTag(tag) : tags.value[index];
+              })
+            );
+          }
+
+          continue;
+        }
+
+        //
+        // ------------------------------
+        // CASE B — items = object[]
+        // ------------------------------
+        //
+        for (const item of items) {
+          // Skip if item is not an object
+          if (typeof item !== "object" || item === null) continue;
+
+          // Look for *any* key that matches the tag field name
+          if (
+            Array.isArray(item[fieldName]) &&
+            item[fieldName].every((i) => typeof i === "string")
+          ) {
+            const arr = item[fieldName] as string[];
+            const uniqueTags = [...new Set(arr)];
+
+            item[fieldName] = await Promise.all(
+              uniqueTags.map(async (tag) => {
+                const index = existingTagNames.indexOf(tag);
+                return index === -1 ? await createTag(tag) : tags.value[index];
+              })
+            );
+          }
+        }
+      }
     }
-    return { config, resume: resumeData } as unknown as ModifiedPayload;
+
+    return { config, resume: resumeData };
   }
 
   /**
