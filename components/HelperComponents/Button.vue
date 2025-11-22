@@ -22,12 +22,12 @@
   });
 
   const emit = defineEmits<{
-    (e: "click"): void;
+    (e: "click", event: PointerEvent): void;
   }>();
 
-  function click() {
+  function click(event: PointerEvent) {
     if (loading.value || disabled.value) return;
-    emit("click");
+    emit("click", event);
   }
 </script>
 

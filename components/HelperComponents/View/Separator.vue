@@ -2,7 +2,7 @@
   interface Props {
     style?: "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge";
     size?: number | string;
-    margin: number;
+    margin?: number;
   }
 
   const props = withDefaults(defineProps<Props>(), {

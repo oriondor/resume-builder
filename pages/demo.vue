@@ -20,6 +20,8 @@
     selectedOptions.value.push(newSkill as SkillItem);
     refresh();
   }
+
+  const { modalProps, openModal } = useModal();
 </script>
 
 <template>
@@ -68,11 +70,20 @@
       <helper-check-box unchecked-icon="pepicons-pencil:seedling-circle-filled" />
       <helper-check-box unchecked-icon="lucide-lab:elephant" checked-icon="mdi:elephant" />
     </div>
+    <view-separator />
+    <div class="flex justify-between">
+      <helper-button @click="openModal()"> Open modal (no animation) </helper-button>
+      <helper-button @click="openModal"> Open modal (animation) </helper-button>
+    </div>
+    <helper-modal v-bind="modalProps">Test modal</helper-modal>
   </div>
 </template>
 
 <style scoped>
   .flex {
     display: flex;
+  }
+  .justify-between {
+    justify-content: space-between;
   }
 </style>
