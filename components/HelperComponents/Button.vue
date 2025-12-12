@@ -38,10 +38,7 @@
       :class="[type, 'gradient-hover', { 'icon-only': isIconOnly }]"
       @click="click"
     >
-      <template v-if="loading">
-        <helper-loading-spinner />
-        <slot />
-      </template>
+      <helper-loading-spinner v-if="loading" />
       <slot v-else name="icon">
         <Icon v-if="icon" :name="icon" />
       </slot>

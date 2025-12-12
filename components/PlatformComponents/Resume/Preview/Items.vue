@@ -5,11 +5,16 @@
 
   const options = defineModel<any[]>("options", { default: [] });
 
-  const totalHeight = computed(() =>
-    items.value?.reduce((acc, item) => (acc += item.height.value), 0)
+  const itemsHeights = computed(() =>
+    items.value?.map((item) => {
+      if (!item.el) return item.height;
+
+      const itemStyle = window.getComputedStyle(item.el);
+      return item.height + parseFloat(itemStyle.marginBlockEnd);
+    })
   );
 
-  defineExpose({ totalHeight });
+  defineExpose({ itemsHeights });
 </script>
 
 <template>
@@ -26,11 +31,11 @@
   .items {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
   }
   .item {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    margin-block-end: 0.5rem;
   }
 </style>

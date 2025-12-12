@@ -8,6 +8,10 @@
   const config = defineModel<TemplateConfig>("config", { required: true });
 
   const { sectionNames } = useFetchSections(config);
+
+  const sections = useTemplateRef("section");
+
+  const { visibleIndices } = useResumePagination(sections);
 </script>
 
 <template>
@@ -16,10 +20,12 @@
       <div class="content">
         <preview-section
           v-for="(sectionName, index) in sectionNames"
+          ref="section"
           :key="sectionName"
           :title="resume[sectionName].title"
           v-model:content="resume[sectionName]"
           v-model:config="config[sectionName]"
+          :items-to-show="visibleIndices[index]"
         />
       </div>
     </div>
