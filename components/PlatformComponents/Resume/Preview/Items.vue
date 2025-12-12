@@ -1,6 +1,16 @@
 <script setup lang="ts">
   import { type PaginableBlockExposeProps } from "./PaginableBlock.vue";
 
+  interface Props {
+    itemsToShow?: number[];
+    measureMode?: boolean;
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    itemsToShow: () => [],
+    measureMode: false,
+  });
+
   const items = useTemplateRef<PaginableBlockExposeProps[]>("item");
 
   const options = defineModel<any[]>("options", { default: [] });
@@ -20,7 +30,12 @@
 <template>
   <div class="items">
     <template v-for="(item, index) in options" :key="item.index">
-      <preview-paginable-block class="item" ref="item" @dblclick="">
+      <preview-paginable-block
+        v-if="measureMode || itemsToShow.includes(index)"
+        class="item"
+        ref="item"
+        @dblclick=""
+      >
         <slot :item :index />
       </preview-paginable-block>
     </template>
@@ -37,5 +52,12 @@
     justify-content: flex-start;
     flex-direction: column;
     margin-block-end: 0.5rem;
+  }
+
+  @media print {
+    .item {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
   }
 </style>

@@ -4,6 +4,8 @@
 
   const templates = ref<Template[]>([]);
 
+  const { width, height } = useWindowSize();
+
   const resume = defineModel<Resume>("resume", { required: true });
   const config = defineModel<TemplateConfig>("config", { required: true });
 
@@ -11,24 +13,120 @@
 
   const sections = useTemplateRef("section");
 
-  const { visibleIndices } = useResumePagination(sections);
+  const { currentPage, totalPages, visibleIndices, allPageAssignments, nextPage, prevPage } =
+    useResumePagination(sections);
+
+  const container = useTemplateRef<HTMLDivElement>("container");
+  const pageWrapper = useTemplateRef<HTMLDivElement>("pageWrapper");
+  const page = useTemplateRef<HTMLDivElement>("page");
+
+  // Calculate scale to fit page in viewport while maintaining A4 aspect ratio
+  const scale = ref(1);
+
+  function updateScale() {
+    if (!pageWrapper.value || !page.value) return;
+
+    const wrapperHeight = pageWrapper.value.clientHeight;
+    const wrapperWidth = pageWrapper.value.clientWidth;
+
+    // Get the actual rendered size of the page element (210mm x 297mm in pixels)
+    const pageWidth = page.value.offsetWidth;
+    const pageHeight = page.value.offsetHeight;
+
+    // Calculate scale to fit both dimensions
+    const scaleX = wrapperWidth / pageWidth;
+    const scaleY = wrapperHeight / pageHeight;
+
+    // Use the smaller scale to ensure it fits
+    scale.value = Math.min(scaleX, scaleY, 1) * 0.98;
+  }
+
+  watch([width, height], updateScale);
+
+  onMounted(() => {
+    // Wait for next tick to ensure elements are rendered
+    nextTick(updateScale);
+  });
 </script>
 
 <template>
-  <div class="container">
-    <div class="page">
-      <div class="content">
-        <preview-section
-          v-for="(sectionName, index) in sectionNames"
-          ref="section"
-          :key="sectionName"
-          :title="resume[sectionName].title"
-          v-model:content="resume[sectionName]"
-          v-model:config="config[sectionName]"
-          :items-to-show="visibleIndices[index]"
-        />
+  <div ref="container" class="container">
+    <!-- Page Navigation -->
+    <div class="page-controls no-print">
+      <helper-button
+        @click="prevPage"
+        :disabled="currentPage === 0"
+        icon="material-symbols:chevron-left"
+      />
+      <view-text>Page {{ currentPage + 1 }} of {{ totalPages }}</view-text>
+      <helper-button
+        @click="nextPage"
+        :disabled="currentPage >= totalPages - 1"
+        icon="material-symbols:chevron-right"
+      />
+    </div>
+
+    <!-- Hidden sections for measurement - render all items -->
+    <div class="measurement-container">
+      <div class="page">
+        <div class="content">
+          <preview-section
+            v-for="(sectionName, index) in sectionNames"
+            ref="section"
+            :key="`measure-${sectionName}`"
+            :title="resume[sectionName].title"
+            v-model:content="resume[sectionName]"
+            v-model:config="config[sectionName]"
+            measure-mode
+          />
+        </div>
       </div>
     </div>
+
+    <!-- Screen View: Current page only (hidden when printing) -->
+    <div ref="pageWrapper" class="page-wrapper screen-only">
+      <div
+        ref="page"
+        class="page"
+        :style="{
+          transform: `scale(${scale})`,
+          transformOrigin: 'top center',
+        }"
+      >
+        <div class="content">
+          <preview-section
+            v-for="(sectionName, index) in sectionNames"
+            :key="sectionName"
+            :title="resume[sectionName].title"
+            v-model:content="resume[sectionName]"
+            v-model:config="config[sectionName]"
+            :items-to-show="visibleIndices[index] || []"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Print View: All pages (hidden on screen, visible when printing) -->
+    <teleport to="body">
+      <div class="print-container">
+        <div
+          v-for="(pageItems, pageIndex) in allPageAssignments"
+          :key="pageIndex"
+          class="page print-page"
+        >
+          <div class="content">
+            <preview-section
+              v-for="(sectionName, sectionIndex) in sectionNames"
+              :key="`print-${sectionName}-${pageIndex}`"
+              :title="resume[sectionName].title"
+              v-model:content="resume[sectionName]"
+              v-model:config="config[sectionName]"
+              :items-to-show="pageItems[sectionIndex] || []"
+            />
+          </div>
+        </div>
+      </div>
+    </teleport>
   </div>
 </template>
 
@@ -36,23 +134,102 @@
   a {
     text-decoration: none;
   }
+
+  .measurement-container {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: hidden;
+    width: 210mm;
+  }
+
+  :global(.print-container) {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  :global(.print-page) {
+    display: none;
+  }
+
   .container {
-    overflow: auto;
-    height: 100%;
-    max-height: 100vh;
+    height: 100vh;
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+  }
 
-    .page {
-      width: 210mm;
-      height: 297mm;
-      margin: 0;
-      padding: 0;
-      background: var(--color-bg);
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-      color: #222;
-      font: 10pt/1.35 var(--resume-font, "Inter", system-ui, sans-serif);
+  .page-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-surface, #fff);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .page-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+    color: #222;
+    font: 10pt/1.35 var(--resume-font, "Inter", system-ui, sans-serif);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+  @media print {
+    .measurement-container,
+    .screen-only,
+    .container {
+      display: none !important;
+    }
+
+    :global(body > .print-container) {
+      display: block !important;
+      position: static !important;
+      z-index: auto !important;
+    }
+
+    :global(.print-page) {
+      position: relative !important;
+      display: block !important;
+      width: 210mm !important;
+      height: 297mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      page-break-after: always !important;
+      page-break-inside: avoid !important;
+      background: white !important;
+      box-sizing: border-box !important;
+    }
+
+    :global(.print-page:last-child) {
+      page-break-after: auto !important;
     }
   }
 </style>

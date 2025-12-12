@@ -4,13 +4,16 @@
 
   interface Props {
     title?: string;
-    itemsToShow: number[];
+    itemsToShow?: number[];
+    measureMode?: boolean;
   }
   const props = withDefaults(defineProps<Props>(), {
     title: "Unnamed section",
+    itemsToShow: () => [],
+    measureMode: false,
   });
 
-  const { itemsToShow } = toRefs(props);
+  const { itemsToShow, measureMode } = toRefs(props);
 
   const content = defineModel<SectionItem<any>>("content", { required: true });
   const config = defineModel<SectionConfig>("config", { required: true });
@@ -57,9 +60,9 @@
 </script>
 
 <template>
-  <div ref="section" class="section" :class="{ hidden: !itemsToShow.length }">
+  <div ref="section" class="section" v-if="measureMode || itemsToShow.length > 0">
     <preview-paginable-block ref="header">
-      <div class="section-header">
+      <div v-if="itemsToShow?.includes(0)" class="section-header">
         <view-text type="title" size="large" class="header-title">
           <slot name="title">
             {{ title }}
@@ -67,20 +70,25 @@
         </view-text>
       </div>
     </preview-paginable-block>
-    <template v-if="isTagItem(config)">
+    <template v-if="isTagItem(config) && (measureMode || itemsToShow.length > 0)">
       <preview-paginable-block class="item" ref="item" @dblclick="">
         <preview-field v-model="content.items" v-bind="firstFieldPayload" />
       </preview-paginable-block>
     </template>
     <template v-else>
-      <preview-items v-model:options="content.items" v-slot="{ item, index }" ref="items">
+      <preview-items
+        v-model:options="content.items"
+        v-slot="{ item, index }"
+        ref="items"
+        :items-to-show="itemsToShow"
+        :measure-mode="measureMode"
+      >
         <preview-field
           v-for="[name, _] in Object.entries(item)"
           :key="name"
           :name
           v-model="content.items[index][name]"
           :field-config="config.fields[name]"
-          :class="{ hidden: !itemsToShow.includes(index) }"
         />
       </preview-items>
     </template>
@@ -98,9 +106,12 @@
       display: flex;
       justify-content: space-between;
     }
+  }
 
-    .hidden {
-      visibility: hidden;
+  @media print {
+    .section {
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
   }
 </style>

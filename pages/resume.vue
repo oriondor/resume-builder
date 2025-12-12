@@ -34,20 +34,6 @@
       print-color-adjust: exact;
     }
 
-    .container {
-      overflow: hidden !important;
-      height: auto;
-    }
-
-    .page {
-      box-shadow: none !important;
-      margin: 0 !important;
-      width: auto;
-      min-height: auto;
-      break-after: page;
-      page-break-after: always;
-    }
-
     .page-source {
       display: none !important;
     }
