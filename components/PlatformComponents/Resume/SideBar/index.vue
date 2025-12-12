@@ -60,7 +60,7 @@
     <div v-if="isMobile && isOpen" class="sidebar-backdrop" @click="closeSidebar" />
 
     <!-- Floating toggle button for mobile -->
-    <button v-if="isMobile && !isOpen" class="floating-toggle" @click="toggleSidebar">
+    <button v-if="isMobile && !isOpen" class="floating-toggle no-print" @click="toggleSidebar">
       <Icon name="material-symbols:edit-sharp" size="24" />
     </button>
   </client-only>

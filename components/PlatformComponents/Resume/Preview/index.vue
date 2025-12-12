@@ -18,23 +18,33 @@
   const page = useTemplateRef<HTMLDivElement>("page");
 
   const { scale } = useResumeScaling(page, pageWrapper);
+
+  function printDialog() {
+    window.print();
+  }
 </script>
 
 <template>
   <div class="container">
     <!-- Page Navigation -->
-    <div class="page-controls no-print">
-      <helper-button
-        @click="prevPage"
-        :disabled="currentPage === 0"
-        icon="material-symbols:chevron-left"
-      />
-      <view-text>Page {{ currentPage + 1 }} of {{ totalPages }}</view-text>
-      <helper-button
-        @click="nextPage"
-        :disabled="currentPage >= totalPages - 1"
-        icon="material-symbols:chevron-right"
-      />
+    <div class="navigation">
+      <div />
+      <div class="page-controls no-print">
+        <helper-button
+          @click="prevPage"
+          :disabled="currentPage === 0"
+          icon="material-symbols:chevron-left"
+        />
+        <view-text>Page {{ currentPage + 1 }} of {{ totalPages }}</view-text>
+        <helper-button
+          @click="nextPage"
+          :disabled="currentPage >= totalPages - 1"
+          icon="material-symbols:chevron-right"
+        />
+      </div>
+      <div class="print-dialog">
+        <helper-button @click="printDialog"> Print </helper-button>
+      </div>
     </div>
 
     <!-- Hidden sections for measurement - render all items -->
@@ -138,9 +148,20 @@
     position: relative;
   }
 
+  .navigation {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > div {
+      min-width: 9rem;
+    }
+  }
+
   .page-controls {
     display: flex;
     align-items: center;
+    align-self: center;
     gap: 0.25rem;
     padding: 0.5rem 1rem;
     background: var(--color-surface, #fff);
