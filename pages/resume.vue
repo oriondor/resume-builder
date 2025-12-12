@@ -21,6 +21,12 @@
     min-height: 0;
     min-width: 0;
   }
+
+  @media (max-width: 1189px) {
+    .builder {
+      gap: 0;
+    }
+  }
 </style>
 <style>
   @media print {
