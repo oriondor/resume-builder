@@ -4,8 +4,6 @@
 
   const templates = ref<Template[]>([]);
 
-  const { width, height } = useWindowSize();
-
   const resume = defineModel<Resume>("resume", { required: true });
   const config = defineModel<TemplateConfig>("config", { required: true });
 
@@ -16,41 +14,14 @@
   const { currentPage, totalPages, visibleIndices, allPageAssignments, nextPage, prevPage } =
     useResumePagination(sections);
 
-  const container = useTemplateRef<HTMLDivElement>("container");
   const pageWrapper = useTemplateRef<HTMLDivElement>("pageWrapper");
   const page = useTemplateRef<HTMLDivElement>("page");
 
-  // Calculate scale to fit page in viewport while maintaining A4 aspect ratio
-  const scale = ref(1);
-
-  function updateScale() {
-    if (!pageWrapper.value || !page.value) return;
-
-    const wrapperHeight = pageWrapper.value.clientHeight;
-    const wrapperWidth = pageWrapper.value.clientWidth;
-
-    // Get the actual rendered size of the page element (210mm x 297mm in pixels)
-    const pageWidth = page.value.offsetWidth;
-    const pageHeight = page.value.offsetHeight;
-
-    // Calculate scale to fit both dimensions
-    const scaleX = wrapperWidth / pageWidth;
-    const scaleY = wrapperHeight / pageHeight;
-
-    // Use the smaller scale to ensure it fits
-    scale.value = Math.min(scaleX, scaleY, 1) * 0.98;
-  }
-
-  watch([width, height], updateScale);
-
-  onMounted(() => {
-    // Wait for next tick to ensure elements are rendered
-    nextTick(updateScale);
-  });
+  const { scale } = useResumeScaling(page, pageWrapper);
 </script>
 
 <template>
-  <div ref="container" class="container">
+  <div class="container">
     <!-- Page Navigation -->
     <div class="page-controls no-print">
       <helper-button
@@ -181,6 +152,7 @@
   .page-wrapper {
     flex: 1;
     min-height: 0;
+    min-width: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
