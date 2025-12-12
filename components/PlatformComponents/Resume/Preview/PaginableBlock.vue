@@ -7,13 +7,8 @@
 
   export interface PaginableBlockExposeProps {
     el: Ref<HTMLElement | null>;
-    children: ComputedRef<
-      {
-        child: Element;
-        rect: DOMRect;
-      }[]
-    >;
-    height: ComputedRef<number>;
+    children: { child: Element; rect: DOMRect }[];
+    height: number;
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -58,7 +53,11 @@
     }, 0)
   );
 
-  defineExpose<PaginableBlockExposeProps>({ el, children, height });
+  defineExpose<PaginableBlockExposeProps>({
+    el,
+    children: computed(() => children.value),
+    height: computed(() => height.value),
+  });
 </script>
 
 <template>
