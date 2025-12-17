@@ -30,7 +30,10 @@
 <template>
   <client-only>
     <!-- Sidebar wrapper for mobile positioning -->
-    <div class="sidebar-wrapper" :class="{ 'sidebar-mobile': isMobile, 'sidebar-open': isOpen }">
+    <div
+      class="sidebar-wrapper no-print"
+      :class="{ 'sidebar-mobile': isMobile, 'sidebar-open': isOpen }"
+    >
       <div class="sidebar">
         <div class="mode-selector">
           <select-theme />
