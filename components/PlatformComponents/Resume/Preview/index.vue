@@ -19,8 +19,33 @@
 
   const { scale } = useResumeScaling(page, pageWrapper);
 
-  function printDialog() {
-    window.print();
+  const pdfLoading = ref(false);
+
+  async function downloadPDF() {
+    pdfLoading.value = true;
+    try {
+      const blob = await $fetch("/api/export/resume", {
+        method: "POST",
+        body: {
+          resume: resume.value,
+          config: config.value,
+        },
+        responseType: "blob",
+      });
+
+      // Trigger download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "my-resume.pdf";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("PDF download failed:", error);
+      // TODO: Show error notification to user
+    } finally {
+      pdfLoading.value = false;
+    }
   }
 </script>
 
@@ -42,8 +67,10 @@
           icon="material-symbols:chevron-right"
         />
       </div>
-      <div class="print-dialog">
-        <helper-button @click="printDialog"> Print </helper-button>
+      <div class="export-buttons">
+        <helper-button @click="downloadPDF" :loading="pdfLoading" icon="material-symbols:download">
+          Download PDF
+        </helper-button>
       </div>
     </div>
 
@@ -188,7 +215,6 @@
     padding: 0;
     background: var(--color-bg);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-    color: #222;
     font: 10pt/1.35 var(--resume-font, "Inter", system-ui, sans-serif);
     transition: transform 0.3s ease;
     overflow: hidden;

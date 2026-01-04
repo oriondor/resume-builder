@@ -39,6 +39,7 @@
     "openai": "^5.12.2",
     "pdfjs-dist": "^5.4.54",
     "pinia": "^3.0.3",
+    "puppeteer": "^24.33.0",
     "qrcode": "^1.5.4",
     "sortablejs": "^1.15.6",
     "universal-cookie": "^8.0.1",

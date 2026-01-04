@@ -51,7 +51,9 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    margin-block-end: 0.5rem;
+    &:not(:last-child) {
+      margin-block-end: 0.5rem;
+    }
   }
 
   @media print {
