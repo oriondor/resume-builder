@@ -21,11 +21,13 @@
 </script>
 
 <template>
-  <component
-    v-if="componentTag"
-    :is="componentTag"
-    v-model="modelValue"
-    v-bind="fieldPayload"
-    :name
-  />
+  <div>
+    <component
+      v-if="componentTag"
+      :is="componentTag"
+      v-model="modelValue"
+      v-bind="fieldPayload"
+      :name
+    />
+  </div>
 </template>

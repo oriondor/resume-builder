@@ -47,15 +47,16 @@
         v-slot="{ collapsed: itemCollapsed, item, index }"
         :section-collapsed="collapsed"
       >
-        <transition-group name="animate-fade-slide" appear mode="out-in">
-          <side-bar-field
-            v-for="[name, _] in Object.entries(item)"
-            :key="name"
-            :name
-            v-model="content.items[index][name]"
-            :collapsed="itemCollapsed"
-            :field-config="config.fields[name]"
-          />
+        <transition-group name="animate-fade-slide" appear>
+          <template v-for="[name, _] in Object.entries(item)" :key="name">
+            <side-bar-field
+              v-if="name !== 'index'"
+              :name
+              v-model="content.items[index][name]"
+              :collapsed="itemCollapsed"
+              :field-config="config.fields[name]"
+            />
+          </template>
         </transition-group>
       </side-bar-items>
     </template>

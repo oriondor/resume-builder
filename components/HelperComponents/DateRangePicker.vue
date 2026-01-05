@@ -29,15 +29,17 @@
   defineExpose({ dateIsCorrect });
 </script>
 <template>
-  <helper-control-element>
-    <div class="date-range-picker">
-      <helper-date-picker v-model:date="dates.startDate" :month />
-      <helper-date-picker v-model:date="dates.endDate" :month />
-      <helper-check-box v-model="present"> Present </helper-check-box>
+  <div>
+    <helper-control-element>
+      <div class="date-range-picker">
+        <helper-date-picker v-model:date="dates.startDate" :month />
+        <helper-date-picker v-model:date="dates.endDate" :month />
+        <helper-check-box v-model="present"> Present </helper-check-box>
+      </div>
+    </helper-control-element>
+    <div v-if="!dateIsCorrect" class="error-message">
+      <p>Start date must be before end date.</p>
     </div>
-  </helper-control-element>
-  <div v-if="!dateIsCorrect" class="error-message">
-    <p>Start date must be before end date.</p>
   </div>
 </template>
 

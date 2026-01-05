@@ -2,7 +2,9 @@
   import type { SelectFieldProps } from "~/types/field";
   import type { Tag, TagStyle } from "~/types/tags";
 
-  const props = defineProps<SelectFieldProps>();
+  const props = withDefaults(defineProps<SelectFieldProps>(), {
+    variant: "neutral",
+  });
 
   const modelValue = defineModel();
 
@@ -13,16 +15,18 @@
 </script>
 <template>
   <template v-if="!collapsed">
-    <helper-selector v-model="selectedVariant" :options="tagStyles" label="Select tag style" />
-    <taggable-select
-      v-model="modelValue"
-      :options
-      field="id"
-      option-name="name"
-      :label
-      :variant
-      @tag="createTag"
-    />
+    <div>
+      <helper-selector v-model="selectedVariant" :options="tagStyles" label="Select tag style" />
+      <taggable-select
+        v-model="modelValue"
+        :options
+        field="id"
+        option-name="name"
+        :label
+        :variant
+        @tag="createTag"
+      />
+    </div>
   </template>
   <template v-else>
     <div>

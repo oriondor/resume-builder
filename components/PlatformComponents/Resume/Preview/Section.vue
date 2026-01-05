@@ -83,13 +83,14 @@
         :items-to-show="itemsToShow"
         :measure-mode="measureMode"
       >
-        <preview-field
-          v-for="[name, _] in Object.entries(item)"
-          :key="name"
-          :name
-          v-model="content.items[index][name]"
-          :field-config="config.fields[name]"
-        />
+        <template v-for="[name, _] in Object.entries(item)" :key="name">
+          <preview-field
+            v-if="name !== 'index'"
+            :name
+            v-model="content.items[index][name]"
+            :field-config="config.fields[name]"
+          />
+        </template>
       </preview-items>
     </template>
   </div>

@@ -22,10 +22,8 @@
 </script>
 <template>
   <div class="dashed-container gradient-hover" @click="$emit('click')">
-    <!-- <slot name="content"> -->
     <Icon v-if="icon" :name="icon" class="icon-class" :size="iconSize" />
     <span v-if="text" class="text-class" :size>{{ text }}</span>
-    <!-- </slot> -->
   </div>
 </template>
 
@@ -39,6 +37,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &:hover {
+      .text-class {
+        color: var(--color-accent-hover);
+      }
+    }
   }
   .icon-class {
     color: var(--color-muted);

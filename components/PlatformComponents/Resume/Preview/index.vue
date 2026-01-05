@@ -75,66 +75,70 @@
     </div>
 
     <!-- Hidden sections for measurement - render all items -->
-    <div class="measurement-container">
-      <div class="page">
-        <div class="content">
-          <preview-section
-            v-for="(sectionName, index) in sectionNames"
-            ref="section"
-            :key="`measure-${sectionName}`"
-            :title="resume[sectionName].title"
-            v-model:content="resume[sectionName]"
-            v-model:config="config[sectionName]"
-            measure-mode
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Screen View: Current page only (hidden when printing) -->
-    <div ref="pageWrapper" class="page-wrapper screen-only">
-      <div
-        ref="page"
-        class="page"
-        :style="{
-          transform: `scale(${scale})`,
-          transformOrigin: 'top center',
-        }"
-      >
-        <div class="content">
-          <preview-section
-            v-for="(sectionName, index) in sectionNames"
-            :key="sectionName"
-            :title="resume[sectionName].title"
-            v-model:content="resume[sectionName]"
-            v-model:config="config[sectionName]"
-            :items-to-show="visibleIndices[index] || []"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Print View: All pages (hidden on screen, visible when printing) -->
-    <teleport to="body">
-      <div class="print-container">
-        <div
-          v-for="(pageItems, pageIndex) in allPageAssignments"
-          :key="pageIndex"
-          class="page print-page"
-        >
+    <ClientOnly>
+      <div class="measurement-container">
+        <div class="page">
           <div class="content">
             <preview-section
-              v-for="(sectionName, sectionIndex) in sectionNames"
-              :key="`print-${sectionName}-${pageIndex}`"
+              v-for="(sectionName, index) in sectionNames"
+              ref="section"
+              :key="`measure-${sectionName}`"
               :title="resume[sectionName].title"
               v-model:content="resume[sectionName]"
               v-model:config="config[sectionName]"
-              :items-to-show="pageItems[sectionIndex] || []"
+              measure-mode
             />
           </div>
         </div>
       </div>
-    </teleport>
+    </ClientOnly>
+
+    <!-- Screen View: Current page only (hidden when printing) -->
+    <ClientOnly>
+      <div ref="pageWrapper" class="page-wrapper screen-only">
+        <div
+          ref="page"
+          class="page"
+          :style="{
+            transform: `scale(${scale})`,
+            transformOrigin: 'top center',
+          }"
+        >
+          <div class="content">
+            <preview-section
+              v-for="(sectionName, index) in sectionNames"
+              :key="sectionName"
+              :title="resume[sectionName].title"
+              v-model:content="resume[sectionName]"
+              v-model:config="config[sectionName]"
+              :items-to-show="visibleIndices[index] || []"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Print View: All pages (hidden on screen, visible when printing) -->
+      <teleport to="body">
+        <div class="print-container">
+          <div
+            v-for="(pageItems, pageIndex) in allPageAssignments"
+            :key="pageIndex"
+            class="page print-page"
+          >
+            <div class="content">
+              <preview-section
+                v-for="(sectionName, sectionIndex) in sectionNames"
+                :key="`print-${sectionName}-${pageIndex}`"
+                :title="resume[sectionName].title"
+                v-model:content="resume[sectionName]"
+                v-model:config="config[sectionName]"
+                :items-to-show="pageItems[sectionIndex] || []"
+              />
+            </div>
+          </div>
+        </div>
+      </teleport>
+    </ClientOnly>
   </div>
 </template>
 

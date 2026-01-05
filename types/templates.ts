@@ -147,7 +147,9 @@ export interface ComponentAttributes {
   placeholder: string;
 }
 
-export type CustomSectionFieldType = "text" | "title" | "subtitle" | "italics" | string;
+export type TextTypes = "text" | "title" | "subtitle" | "italics";
+
+export type CustomSectionFieldType = TextTypes | string;
 
 export interface CustomSectionFieldConfig {
   component: CustomSectionFieldComponent;

@@ -2,10 +2,12 @@
   import type { FieldProps } from "~/types/field";
 
   interface Props extends FieldProps {
-    lineClamp: number | string;
+    lineClamp?: number | string;
   }
 
-  defineProps<Props>();
+  withDefaults(defineProps<Props>(), {
+    type: "text",
+  });
 
   const modelValue = defineModel();
 </script>
