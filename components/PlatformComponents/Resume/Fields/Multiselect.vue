@@ -14,23 +14,19 @@
   const selectedVariant = ref<TagStyle>("accent");
 </script>
 <template>
-  <template v-if="!collapsed">
-    <div>
-      <helper-selector v-model="selectedVariant" :options="tagStyles" label="Select tag style" />
-      <taggable-select
-        v-model="modelValue"
-        :options
-        field="id"
-        option-name="name"
-        :label
-        :variant
-        @tag="createTag"
-      />
-    </div>
-  </template>
-  <template v-else>
-    <div>
-      <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
-    </div>
-  </template>
+  <div v-if="!collapsed">
+    <helper-selector v-model="selectedVariant" :options="tagStyles" label="Select tag style" />
+    <taggable-select
+      v-model="modelValue"
+      :options
+      field="id"
+      option-name="name"
+      :label
+      :variant
+      @tag="createTag"
+    />
+  </div>
+  <div v-else>
+    <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
+  </div>
 </template>

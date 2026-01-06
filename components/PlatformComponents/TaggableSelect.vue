@@ -68,8 +68,8 @@
         <helper-tag :text="getOptionLabel(option)" :variant />
       </div>
     </template>
-    <template v-if="search && !exactMatchExists" #options-addon>
-      <div class="add-new-tag">
+    <template #options-addon>
+      <div v-if="search && !exactMatchExists" class="add-new-tag">
         <helper-button
           icon="material-symbols:add-2"
           type="subdued"
@@ -104,6 +104,11 @@
   }
   :deep(.trigger-content .control) {
     flex: 1;
+  }
+  .add-new-tag {
+    border-top: 1px solid var(--color-border);
+    padding: 0.5rem;
+    background: var(--color-surface);
   }
   .add-new-tag :deep(button) {
     width: 100%;

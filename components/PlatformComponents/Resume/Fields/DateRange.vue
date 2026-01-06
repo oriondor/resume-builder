@@ -6,10 +6,8 @@
   const modelValue = defineModel();
 </script>
 <template>
-  <template v-if="!collapsed">
-    <helper-date-range-picker v-model:dates="modelValue" :label :placeholder month />
-  </template>
-  <template v-else>
-    <view-dates :dates="modelValue" month />
-  </template>
+  <div>
+    <helper-date-range-picker v-if="!collapsed" v-model:dates="modelValue" :label :placeholder month />
+    <view-dates v-else :dates="modelValue" month />
+  </div>
 </template>

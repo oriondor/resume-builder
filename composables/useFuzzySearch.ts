@@ -22,22 +22,29 @@ export function useFuzzySearch<T extends object>(
   search: MaybeRef<string>,
   options?: FuseOptions<T>
 ) {
-  const data = unref(dataSource);
+  // If options are provided, treat as object array; otherwise string array
+  const isObjectArray = !!options;
 
-  if (typeof data[0] === "string") {
-    const wrapped = (data as string[]).map((str) => ({ value: str }));
-    const { results } = useFuse(search, wrapped, {
+  if (!isObjectArray) {
+    // String array handling
+    const wrappedData = computed(() => {
+      const data = unref(dataSource) as string[];
+      return data.map((str) => ({ value: str }));
+    });
+
+    const { results } = useFuse(search, wrappedData, {
       fuseOptions: { keys: ["value"] },
       matchAllWhenSearchEmpty: true,
     });
-    const items = computed(() => results.value.map(({ item }) => item));
-    return items;
+
+    return computed(() => results.value.map(({ item }) => item.value));
   } else {
-    const { results } = useFuse(search, data as T[], {
+    // Object array handling
+    const { results } = useFuse(search, dataSource as MaybeRef<T[]>, {
       fuseOptions: options,
       matchAllWhenSearchEmpty: true,
     });
-    const items = computed(() => results.value.map(({ item }) => item));
-    return items;
+
+    return computed(() => results.value.map(({ item }) => item));
   }
 }

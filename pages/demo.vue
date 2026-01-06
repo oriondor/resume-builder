@@ -13,7 +13,7 @@
   const selectedOptions = ref<SkillItem[]>([]);
   const selectedOption = ref<SkillItem | null>(null);
 
-  const { tags: options, createTag, refresh } = await useTags("skills");
+  const { tags: options, createTag, refresh } = useTags("skills");
 
   async function createNewSkill(name: string) {
     const newSkill = await createTag(name);
@@ -62,7 +62,13 @@
       label="Test skills"
       @tag="createNewSkill"
     />
-    <helper-selector v-model="selectedOption" :options field="id" option-name="name" />
+    <helper-selector
+      v-model="selectedOption"
+      :options
+      field="id"
+      option-name="name"
+      label="Single select skill"
+    />
     <view-separator />
     <div class="flex fancy-check-boxes">
       <helper-check-box checked-icon="noto:goose" />
@@ -70,6 +76,27 @@
       <helper-check-box unchecked-icon="pepicons-pencil:seedling-circle-filled" />
       <helper-check-box unchecked-icon="lucide-lab:elephant" checked-icon="mdi:elephant" />
     </div>
+    <view-separator />
+    <helper-empty-state
+      title="No items found"
+      description="Try adjusting your search or filters"
+      size="small"
+    />
+    <view-separator />
+    <helper-empty-state
+      icon="material-symbols:folder-open-outline"
+      title="No projects yet"
+      description="Create your first project to get started"
+    />
+    <view-separator />
+    <helper-empty-state
+      icon="material-symbols:cloud-off-outline"
+      title="Connection lost"
+      description="Please check your internet connection and try again"
+      size="large"
+    >
+      <helper-button type="secondary"> Retry </helper-button>
+    </helper-empty-state>
     <view-separator />
     <div class="flex justify-between">
       <helper-button @click="openModal()"> Open modal (no animation) </helper-button>

@@ -235,5 +235,6 @@
     border: 0;
     background-color: transparent;
     position: fixed;
+    z-index: 1;
   }
 </style>
