@@ -105,7 +105,7 @@
 
       <template #content="{ toggle }">
         <div class="selector-content">
-          <ul>
+          <ul v-if="options.length">
             <li
               v-for="option in options"
               :key="getOptionKey(option)"
@@ -123,6 +123,9 @@
               </slot>
             </li>
           </ul>
+          <slot v-else name="no-options">
+            <helper-empty-state title="No options found" size="small" />
+          </slot>
           <slot name="options-addon" />
         </div>
       </template>

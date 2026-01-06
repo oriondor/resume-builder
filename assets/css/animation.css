@@ -1,7 +1,7 @@
 :root {
   /* --- motion tokens --- */
-  --motion-duration-short: 0.01s;
-  --motion-duration-medium: 0.4s;
+  --motion-duration-short: 0.05s;
+  --motion-duration-medium: 0.15s;
   --motion-distance-small: 0.15rem;
   --motion-distance-medium: 2rem;
   --motion-distance-large: 1rem;
@@ -45,7 +45,7 @@
 }
 
 .animate-fade-slide-move {
-  transition: transform 0.4s ease;
+  transition: transform var(--motion-duration-medium) ease;
 }
 
 /* fade-reverse */
@@ -84,5 +84,5 @@
 }
 
 .animate-fade-slide-reverse-move {
-  transition: transform 0.4s ease;
+  transition: transform var(--motion-duration-medium) ease;
 }

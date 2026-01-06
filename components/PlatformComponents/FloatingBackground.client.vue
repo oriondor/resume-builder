@@ -140,8 +140,6 @@
       yoyo: true,
       repeat: -1,
     });
-
-    console.log("created tween?", tween);
   }
 
   watch(count, (newCount, oldCount) => {
@@ -149,7 +147,7 @@
   });
 
   onMounted(() => {
-    useTimeoutFn(() => generateIcons(count.value), 100);
+    useTimeoutFn(() => generateIcons(count.value), 5);
   });
 </script>
 

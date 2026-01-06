@@ -1,5 +1,6 @@
 import type { AIResume, Resume } from "~/types/resume";
 import type { TemplateConfig } from "~/types/templates";
+import type { Tag } from "~/types/tags";
 
 /**
  * This composable is used for preprocessing resume that arrived from LLM
@@ -39,9 +40,19 @@ export function useResumeProcessing() {
     const tagFields = getTagCategories(config); // e.g. ["skills", "tools", "technologies", ...]
 
     for (const fieldName of tagFields) {
-      const { tags, refresh, createTag } = useTags(fieldName);
-      await refresh();
-      const existingTagNames = tags.value.map((t) => t.name);
+      // Fetch existing tags for this field using useApi directly
+      const tags = await useApi<Tag[]>("/api/tags", {
+        query: { identifier: fieldName },
+      });
+      const existingTagNames = tags.map((t) => t.name);
+
+      // Helper to create a new tag
+      const createTag = async (name: string) => {
+        return await useApi("/api/tags", {
+          method: "POST",
+          body: { identifier: fieldName, name },
+        });
+      };
 
       // Iterate over each section of resume (experience, education, skills, ...)
       for (const sectionKey of Object.keys(resumeData)) {
@@ -62,7 +73,7 @@ export function useResumeProcessing() {
             section.items = await Promise.all(
               uniqueTags.map(async (tag) => {
                 const index = existingTagNames.indexOf(tag);
-                return index === -1 ? await createTag(tag) : tags.value[index];
+                return index === -1 ? await createTag(tag) : tags[index];
               })
             );
           }
@@ -90,7 +101,7 @@ export function useResumeProcessing() {
             item[fieldName] = await Promise.all(
               uniqueTags.map(async (tag) => {
                 const index = existingTagNames.indexOf(tag);
-                return index === -1 ? await createTag(tag) : tags.value[index];
+                return index === -1 ? await createTag(tag) : tags[index];
               })
             );
           }

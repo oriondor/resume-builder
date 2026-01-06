@@ -1,33 +1,44 @@
 import type { Tag, TagStyle } from "~/types/tags";
 
 export function useTags(identifier: string) {
-  const key = computed(() => `tags:${unref(identifier)}`);
-
   const {
     data: tags,
     pending,
     error,
     refresh,
-  } = useFetch<Tag[]>("/api/tags", {
-    key,
-    query: computed(() => ({ identifier: unref(identifier) })),
-    default: () => [],
-    server: false,
-  });
+  } = useAsyncData<Tag[]>(
+    `tags:${unref(identifier)}`,
+    () =>
+      useApi<Tag[]>("/api/tags", {
+        query: { identifier: unref(identifier) },
+      }),
+    {
+      default: () => [],
+      server: false,
+    }
+  );
 
   async function createTag(name: string) {
-    return await $fetch("/api/tags", { method: "POST", body: { identifier, name } });
+    return await useApi("/api/tags", {
+      method: "POST",
+      body: { identifier: unref(identifier), name },
+    });
   }
 
   async function renameTag(id: string, name: string) {
-    return await $fetch(`/api/tags/${id}`, { method: "PUT", body: { name } });
+    return await useApi(`/api/tags/${id}`, {
+      method: "PUT",
+      body: { name },
+    });
   }
 
   async function removeTag(id: string) {
-    return await $fetch(`/api/tags/${id}`, { method: "DELETE" });
+    return await useApi(`/api/tags/${id}`, {
+      method: "DELETE",
+    });
   }
 
   const tagStyles: TagStyle[] = ["neutral", "accent"];
 
-  return { tags, refresh, createTag, renameTag, removeTag, tagStyles };
+  return { tags, pending, error, refresh, createTag, renameTag, removeTag, tagStyles };
 }

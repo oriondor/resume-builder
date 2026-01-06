@@ -2,7 +2,9 @@
   import type { SelectFieldProps } from "~/types/field";
   import type { Tag, TagStyle } from "~/types/tags";
 
-  const props = defineProps<SelectFieldProps>();
+  const props = withDefaults(defineProps<SelectFieldProps>(), {
+    variant: "neutral",
+  });
 
   const modelValue = defineModel();
 
@@ -12,7 +14,7 @@
   const selectedVariant = ref<TagStyle>("accent");
 </script>
 <template>
-  <template v-if="!collapsed">
+  <div v-if="!collapsed">
     <helper-selector v-model="selectedVariant" :options="tagStyles" label="Select tag style" />
     <taggable-select
       v-model="modelValue"
@@ -23,10 +25,8 @@
       :variant
       @tag="createTag"
     />
-  </template>
-  <template v-else>
-    <div>
-      <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
-    </div>
-  </template>
+  </div>
+  <div v-else>
+    <helper-tag v-for="tag in modelValue as Tag[]" :key="tag.id" :text="tag.name" :variant />
+  </div>
 </template>

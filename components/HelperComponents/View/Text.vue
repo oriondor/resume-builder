@@ -1,6 +1,8 @@
 <script setup lang="ts">
+  import type { TextTypes } from "~/types/templates";
+
   export interface TextProps {
-    type?: "text" | "title" | "subtitle" | "italics";
+    type?: TextTypes;
     size?: "small" | "medium" | "large" | "extra-large";
     uppercase?: boolean;
     icon?: string | null;
@@ -16,7 +18,7 @@
   const attrs = useAttrs();
   const modelValue = defineModel<string>();
 
-  const clampLines = computed(() => Number(props.lineClamp));
+  const clampLines = computed(() => Number(props.lineClamp ?? 1));
 </script>
 
 <template>
